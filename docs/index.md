@@ -14,11 +14,21 @@
 
 ## Équipe
 
-- Alice Dupont: Responsable de...
-- Bob Tremblay: Responsable de...
-- Bob Tremblay: Responsable de...
+- Aïssatou Ndiaye: Responsable de...
+- Wendkuni Reine Rosine Guinguiere : Responsable de...
+- Papa Moussa Diabaté: Responsable de...
 
 ## Description du projet
+
+&nbsp;&nbsp;&nbsp;&nbsp;Datarium est un projet visant à concevoir un dispositif interactif de visualisation de l'empreinte numerique appelé thermometre de données. 
+
+Ce dispositif reposera sur une carte Arduino zero , qui sera le coeur du systeme, permettant de collecter , traiter et afiicher les données en temps réel.
+
+Le Thermometre de données offrira une interface visuelle de l'empreinte numérique produite par l'utilisateur ou un système , que ce soit par des indicateurs graphiques (Écran, LED, Jauge) ou par des effets physiques (Mouvement, Lumiere, Son).
+Grâce à la polyvaleve de l'Arduino Zero, le dispositif pourr intégrer divers capteurs , modiles de communication et dispositifs de sortie pour fournir une visualisation  intercative.
+
+L'objectif de Datarium est de sensibiliser les utilisateurs sur leur consommation numérique et de promouvoir des comportements plus responsables face aux ressources informatiques. En rendant l'empreinte numérique visible de manière tangible, ce projet vise à renforcer le comprehention des utilisateurs quant à leur utilisation des ressources numériques et à les inciter à adopter des pratiques plus durables.
+   
 
 ### Contexte
 

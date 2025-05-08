@@ -32,10 +32,21 @@ L'objectif de Datarium est de sensibiliser les utilisateurs sur leur consommatio
 
 ### Contexte
 
+À l’ère du numérique, nos gestes quotidiens – envoyer un courriel, naviguer sur le web, regarder une vidéo en streaming, utiliser des services cloud ou encore interagir avec des intelligences artificielles – génèrent une empreinte numérique invisible, mais bien réelle. Cette activité numérique repose sur un vaste réseau d’équipements physiques qui consomment de l’énergie à chaque étape. Par exemple, lorsqu’un utilisateur regarde une vidéo sur YouTube ou envoie un message via un chatbot, cela mobilise des serveurs distants pour traiter la demande, des réseaux Wi-Fi ou mobiles pour transmettre les données, et des appareils personnels (téléphones, ordinateurs, routeurs) pour afficher le résultat.
+Même une action aussi simple que stocker un fichier dans un service en ligne comme Google Drive entraîne une série d’échanges invisibles entre plusieurs machines, consommant chacune de l’électricité. C’est l’ensemble de ce circuit, souvent ignoré par l’utilisateur, qui constitue l’empreinte numérique.
+
+
 ### Problématique ou motivations
+
+Malgrés la croissance de l’activité numérique, la majorité des utilisateurs ne perçoivent pas son coût environnemental. L’empreinte numérique reste abstraite, car elle est difficile à visualiser, et ses effets sont différés, invisibles, et peu médiatisés.
+Il n’existe que très peu d’outils accessibles permettant de rendre compréhensible l’impact d’une action numérique simple, comme consulter une vidéo ou utiliser un service cloud.
+
+Ainsi dans un contexte où les enjeux environnementaux deviennent cruciaux, il est essentiel de développer des outils pédagogiques et accessibles pour faire comprendre l’impact des usages numériques. Ce projet se situe à la croisée de l’électronique, du mobile, et de la conscience écologique. Il propose une approche simple, intuitive et mesurable pour rendre visible l’invisible.
 
 ### Proposition et objectifs
 
+Le projet Datarium vise à développer un dispositif interactif permettant de visualiser, en temps réel, l’impact environnemental d’une action numérique. Cette visualisation prend la forme d’un retour physique ou graphique (lumière, jauge, écran), connecté à une application mobile.
+L’objectif est de traduire une action numérique (navigation, vidéo, requête IA…) en une représentation immédiate et compréhensible, selon son intensité, son volume ou sa portée, afin de sensibiliser les utilisateurs à leur empreinte numérique et encourager des usages plus responsables.
 
 ## Échéancier
 

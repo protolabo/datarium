@@ -3,10 +3,12 @@
 ## Semaine 1
 
 ??? note "Mettre en place l'environnement"
+
+??? note "Faire l'introduction du projet"
     - [x] Faire la description du projet (par Reine)
-    - [ ] Ecrire le contexte
-    - [ ] Ecrire la problematique ou les motivations
-    - [ ] Ecrire les propositions et objectifs
+    - [x] Ecrire le contexte
+    - [x] Ecrire la problematique ou les motivations
+    - [x] Ecrire les propositions et objectifs
        
 
 !!! info "Notes"

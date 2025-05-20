@@ -34,13 +34,22 @@
 
  - [x] Revisions des propositions et objectifs 
  - [X] Faire le resume des articles present sur le google docs
- 
+
 !!! info "Notes"
     - Il est possible que nous révisions les exigences et la recherches de solution et donc revoir la methodologie
 
 ## Semaine 3
 
-- [] Rendre la description du projet sur Studium 
+- [] Rendre la description du projet sur Studium
+
+??? note "Faire le prototype 1"
+    - [] faire le prototype de l'application mobile
+    - [] faire la maquette Arduino 
+
+!!! info "Notes"
+    - Il est possible que nous révisions les prototypes 
+  
+
 
 
 ## Semaine 4

@@ -94,8 +94,8 @@ Cette approche favorise l’appropriation individuelle des enjeux de durabilité
 | Jalon (*Milestone*)            | Date prévue   | Livrable                            | Statut      |
 |--------------------------------|---------------|-------------------------------------|-------------|
 | Ouverture de projet            | 1 mai         | Proposition de projet               | ✅ Terminé  |
-| Analyse des exigences          | 16 mai        | Document d'analyse                  | 🔄 En cours |
-| Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | ⏳ À venir  |
+| Analyse des exigences          | 16 mai        | Document d'analyse                  | ✅ Terminé  |
+| Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | 🔄 En cours  |
 | Prototype 2                    | 30 mai        | Prototype finale + Flux             | ⏳ À venir  |
 | Architecture                   | 30 mai        | Diagramme UML ou modèle C4          | ⏳ À venir  |
 | Modèle de donneés              | 6 juin        | Diagramme UML ou entité-association | ⏳ À venir  |

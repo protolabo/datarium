@@ -22,7 +22,24 @@
 
 ## Semaine 2
 
+- [x] Creation d'un google docs 
+
+??? note "Faire l'etude preleminaire du projet"
+    - [x] Faire l'analyse du probleme 
+    - [x] Mettre les exigences
+    - [x] Recherche des solutions
+    - [x] Ecrire la methodologie
+
+ - [x] Revisions des propositions et objectifs 
+ - [X] Faire le resume des articles present sur le google docs
+ 
+!!! info "Notes"
+    - Il est possible que nous révisions les exigences et la recherches de solution et donc revoir la methodologie
+
 ## Semaine 3
+
+- [] Rendre la description du projet sur Studium 
+
 
 ## Semaine 4
 

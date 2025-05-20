@@ -1,4 +1,4 @@
-# Projet IFT3150: Nom du projet
+# Projet IFT3150: Datarium
 
 > **Thèmes**: Systemes embarqués, Génie logiciel, Application mobile  
 > **Superviseur**: Louis-Edouard Lafontant  

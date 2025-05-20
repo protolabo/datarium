@@ -2,9 +2,8 @@
 
 > **Thèmes**: Systemes embarqués, Génie logiciel, Application mobile  
 > **Superviseur**: Louis-Edouard Lafontant  
-> **Collaborateurs:** Nom de(s) collaborateur(s) et partenaire(s)
 
-## Informations importantes
+<!-- ## Informations importantes -->
 
 <!-- !!! info "Dates importantes"
     - **Description du projet** : 16 mai 2025
@@ -20,14 +19,20 @@
 
 ## Description du projet
 
-&nbsp;&nbsp;&nbsp;&nbsp;Datarium est un projet visant à concevoir un dispositif interactif de visualisation de l'empreinte numerique appelé thermometre de données. 
+Datarium est un projet visant à concevoir un dispositif interactif de visualisation de l'empreinte numerique appelé thermometre de données. 
 
 Ce dispositif reposera sur une carte Arduino zero , qui sera le coeur du systeme, permettant de collecter , traiter et afiicher les données en temps réel.
 
 Le Thermometre de données offrira une interface visuelle de l'empreinte numérique produite par l'utilisateur ou un système , que ce soit par des indicateurs graphiques (Écran, LED, Jauge) ou par des effets physiques (Mouvement, Lumiere, Son).
 Grâce à la polyvaleve de l'Arduino Zero, le dispositif pourr intégrer divers capteurs , modiles de communication et dispositifs de sortie pour fournir une visualisation  intercative.
 
-L'objectif de Datarium est de sensibiliser les utilisateurs sur leur consommation numérique et de promouvoir des comportements plus responsables face aux ressources informatiques. En rendant l'empreinte numérique visible de manière tangible, ce projet vise à renforcer le comprehention des utilisateurs quant à leur utilisation des ressources numériques et à les inciter à adopter des pratiques plus durables.
+L'objectif de Datarium est de: 
+
+1. Développer un dispositif interactif permettant la visualisation en temps réel de l’impact environnemental d’actions numériques.
+2. Traduire l’impact numérique en signaux visibles et compréhensibles, via un retour physique ou graphique (ex. : lumière, jauge, écran).
+3. Connecter ce dispositif à une application mobile, pour enrichir l’expérience utilisateur et le suivi de l’impact.
+4. Sensibiliser les utilisateurs à leur empreinte environnementale numérique de manière concrète et intuitive.
+5. Encourager des comportements numériques plus responsables, en rendant l’impact visible et immédiat.
    
 
 ### Contexte

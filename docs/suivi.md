@@ -40,11 +40,11 @@
 
 ## Semaine 3
 
-- [] Rendre la description du projet sur Studium
+- [x] Rendre la description du projet sur Studium
 
 ??? note "Faire le prototype 1"
-    - [] faire le prototype de l'application mobile
-    - [] faire la maquette Arduino 
+    - [x] faire le prototype de l'application mobile
+    - [x] faire la maquette ESP32 
 
 !!! info "Notes"
     - Il est possible que nous révisions les prototypes 
@@ -53,6 +53,19 @@
 
 
 ## Semaine 4
+
+- [x] Faire Le prototype 2 sur Figma 
+
+??? note "Préparer un environnement de test isolé"
+       - [x] Déconnecter tous les autres appareils du réseau pour éliminer le bruit réseau
+       - [x] Désactiver les processus inutiles sur l'ordinateur utilisé
+
+??? note "Pour chaque service type:"
+     - [x] Définissez des actions types. Ex: YouTube : ouvrir la page d’accueil, lancer une vidéo en 1080p pendant 1 minute… ou ChatGPT : envoyer une requête, attendre la réponse    
+     - [x] Lancer la capture réseau
+     - [x] Démarrer la capture juste avant l'action et l'arrête immédiatement après.
+     - [x] Documenter chaque action
+     - [x] Pensez à répéter chaque test plusieurs fois pour obtenir une moyenne.
 
 ## Semaine 5
 

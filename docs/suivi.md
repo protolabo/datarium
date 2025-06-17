@@ -68,6 +68,8 @@
      - [x] Pensez à répéter chaque test plusieurs fois pour obtenir une moyenne.
 
 ## Semaine 5
+    - [x] Faire la correction du prototype 2 sur Figma 
+    - [x] Faire le modele C4 
 
 ## Semaine 6
 

@@ -52,37 +52,44 @@ Ainsi dans un contexte où les enjeux environnementaux deviennent cruciaux, il e
 
 Le projet Datarium a pour ambition de concevoir un dispositif interactif de sensibilisation à l’impact environnemental du numérique. Il s’inscrit dans une volonté pédagogique de rendre visible, compréhensible et tangible une empreinte souvent invisible : celle de nos actions numériques quotidiennes. Le dispositif associe un retour physique ou graphique en temps réel (jauge lumineuse, affichage à l’écran, son, etc.) à une application mobile qui collecte, estime et restitue les données environnementales de chaque usage. Cette proposition repose sur plusieurs objectifs fondamentaux :
 
-#### Rendre perceptible l’empreinte numérique au moment de l’usage
-  L’empreinte numérique est souvent abstraite ou différée (émissions CO₂, consommation électrique, usage des ressources).
+#### Rendre visible et compréhensible l’empreinte réelle du numérique
+ L’empreinte numérique est souvent différée, abstraite ou mal connue : émissions de CO₂, consommation électrique, utilisation des ressources minérales, etc. Datarium cherche à la matérialiser en temps réel, au moment même de l’usage (ex. : une LED qui change de couleur selon l’intensité de l’impact).
 
-  En affichant une représentation instantanée (ex. : une LED qui passe du vert au rouge selon la charge environnementale), Datarium crée un effet de feedback immédiat, qui aide à comprendre l’impact au moment de l’action.
+En s’appuyant sur des données scientifiques solides (ACV, analyses d’émissions, études sur les usages), le dispositif agit aussi comme un outil de transparence citoyenne face à l’opacité des impacts numériques. Il permet ainsi de réconcilier l’expérience utilisateur avec les conséquences environnementales réelles de ses choix numériques.
 
-#### Sensibiliser sans culpabiliser
-   Le projet ne cherche pas à pointer du doigt les utilisateurs, mais à donner des repères concrets pour mieux comprendre et arbitrer ses choix numériques.
-
-   En proposant peut-etre des comparaisons simples (ex. : "cette vidéo HD = 200g CO₂ = 2 km en voiture"), l’interface favorise une prise de conscience accessible.
 
 #### Encourager des usages numériques plus responsables
   L’objectif est de favoriser des comportements de sobriété numérique volontaire, comme :
 
-    - préférer le Wi-Fi à la 5G
+    - préférer le Wi-Fi à la 5G (données mobiles)
 
     - limiter la lecture de vidéos en haute résolution, ou l'utilisation de l'IA
 
     - prolonger la durée de vie des équipements
 
-  En traduisant les impacts en unités tangibles, Datarium aide l’utilisateur à mieux ajuster ses pratiques sans contraintes techniques.
+  En traduisant et rendant lisibles les impacts en unités tangibles, Datarium aide l’utilisateur à mieux ajuster ses pratiques sans contraintes techniques.
 
 #### Adapter l’affichage selon le type d’action et de connexion
   Une requête d’IA, une vidéo en streaming, un e-mail ou une recherche web n’ont pas le même impact.
 
   Le système est pensé pour analyser le type de service utilisé (via des protocoles ou des signatures réseau) et le mode de connexion (Wi-Fi, 4G, 5G) afin d’ajuster dynamiquement l’indicateur.
 
-#### Offrir un support à la pédagogie et à la recherche
-   Le dispositif constitue un outil d’observation comportementale, permettant de mesurer les effets de rétroaction visuelle sur les habitudes numériques.
+#### Donner à l’utilisateur le pouvoir d’explorer ses usages
+ L’application mobile permettra à chaque utilisateur de :
 
-#### Renforcer la transparence sur l’empreinte réelle du numérique
-   En s’appuyant sur les données de la littérature scientifique (ACV, études sur l’IA, impact des data centers), Datarium se positionne comme un outil de médiation citoyenne face à l’opacité des impacts numériques.
+ Choisir une catégorie de services à suivre (streaming, réseaux sociaux, requêtes IA, etc.)
+
+Identifier quels services consomment le plus en énergie, données ou CO₂
+
+Comparer différentes pratiques numériques et visualiser leur empreinte respective
+
+Cette approche favorise l’appropriation individuelle des enjeux de durabilité numérique, et crée un espace interactif d’exploration et d’apprentissage personnalisé.
+
+
+#### Sensibiliser sans culpabiliser
+   Le projet ne cherche pas à pointer du doigt les utilisateurs, mais à donner des repères concrets pour mieux comprendre et arbitrer ses choix numériques.
+
+   En proposant peut-etre des comparaisons simples (ex. : "cette vidéo HD = 200g CO₂ = 2 km en voiture"), l’interface favorise une prise de conscience accessible.   
 
 ## Échéancier
 
@@ -92,9 +99,9 @@ Le projet Datarium a pour ambition de concevoir un dispositif interactif de sens
 | Jalon (*Milestone*)            | Date prévue   | Livrable                            | Statut      |
 |--------------------------------|---------------|-------------------------------------|-------------|
 | Ouverture de projet            | 1 mai         | Proposition de projet               | ✅ Terminé  |
-| Analyse des exigences          | 16 mai        | Document d'analyse                  | 🔄 En cours |
-| Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | 🔄 En cours |
-| Prototype 2                    | 30 mai        | Prototype finale + Flux             | ⏳ À venir  |
+| Analyse des exigences          | 16 mai        | Document d'analyse                  | ✅ Terminé |
+| Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | ✅ Terminé  |
+| Prototype 2                    | 30 mai        | Prototype finale + Flux             | 🔄 En cours   |
 | Architecture                   | 30 mai        | Diagramme UML ou modèle C4          | ⏳ À venir  |
 | Modèle de donneés              | 6 juin        | Diagramme UML ou entité-association | ⏳ À venir  |
 | Revue de conception            | 6 juin        | Feedback encadrant + ajustements    | ⏳ À venir  |

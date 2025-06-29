@@ -6,7 +6,7 @@
 <!-- ## Informations importantes -->
 
 <!-- !!! info "Dates importantes"
-    - **Description du projet** : 16 mai 2025
+    - **Description du projet** : 23 mai 2025
     - **Foire 1: Prototypage** : 9-13 juin 2025
     - **Foire 2: Version beta** : 14-18 juillet 2025
     - **Présentation et rapport** : 11-15 août 2025 -->
@@ -93,7 +93,7 @@ Le projet Datarium a pour ambition de concevoir un dispositif interactif de sens
 |--------------------------------|---------------|-------------------------------------|-------------|
 | Ouverture de projet            | 1 mai         | Proposition de projet               | ✅ Terminé  |
 | Analyse des exigences          | 16 mai        | Document d'analyse                  | 🔄 En cours |
-| Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | ⏳ À venir  |
+| Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | 🔄 En cours |
 | Prototype 2                    | 30 mai        | Prototype finale + Flux             | ⏳ À venir  |
 | Architecture                   | 30 mai        | Diagramme UML ou modèle C4          | ⏳ À venir  |
 | Modèle de donneés              | 6 juin        | Diagramme UML ou entité-association | ⏳ À venir  |

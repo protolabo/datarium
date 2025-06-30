@@ -1,5 +1,3 @@
-// models/filter_option.dart
-
 class FilterOption {
   final String name;
   bool isSelected;

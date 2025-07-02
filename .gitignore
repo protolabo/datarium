@@ -117,3 +117,13 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# ────────── BACKEND NODE ──────────
+# Dépendances installées localement
+backend/node_modules/
+
+# Variables d’environnement privées
+backend/.env
+
+# Clé privée Firebase Admin 
+backend/src/services/serviceAccount.json

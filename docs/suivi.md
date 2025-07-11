@@ -72,13 +72,42 @@
     - [x] Faire le modele C4 
 
 ## Semaine 6
+- [x] Commencer le front end de l'application avec flutter
+- [x] Recherche sur la facon de sniffer le reseau
+
+
 
 ## Semaine 7
+- [x] Codage de l'application avec flutter
+??? note "Recherche sur la facon de sniffer le reseau"
+    - [x] Test avec ntop
+
+- [x] Mis en place du backend
+
+!!! info "Notes"
+    - Il est possible que nous changions la facon de sniffer le reseau 
+  
+
 
 ## Semaine 8
+- [x] Codage de l'application avec flutter
+
+??? note "Recherche sur la facon de sniffer le reseau"
+    - [x] Utilisation des scripts python
+
+??? note "Mis en place du backend"
+    - [x] Implementation d'une API avec Express
+    - [x] creation d'une base de donnee avec firebase
+
+
+!!! info "Notes"
+    - Revoir la structure du backend ainsi que la base de donnee 
 
 ## Semaine 9
 
+- [] Codage de l'application avec flutter
+- [] Revision de la structure du backend et base de donne
+- [] Test du sniffer
 ## Semaine 10
 
 ## Semaine 11

@@ -93,7 +93,15 @@
 - [x] Codage de l'application avec flutter
 
 ??? note "Recherche sur la facon de sniffer le reseau"
-    - [x] Utilisation des scripts python
+    - [x] Nous nous sommes servi de scapy pour faire la capture du réseau 
+        Scapy est une bibliothéque Python qui permet de créer, envoyer, renifler, disséquer et manipuler des paquets réseau.
+    - [x] lien vers la documentation de scapy https://scapy.readthedocs.io/en/stable/api/scapy.html
+    - [x] https://stackoverflow.com/questions/29937421/capturing-scapy-function-show-interfaces-output-in-python
+    - [x] https://www.geeksforgeeks.org/python/finding-all-wifi-devices-using-scapy-python/
+    - [x] Ici y a les ressources qui ont servi à la réalisation du script, en ce qui concerne les IP et serveurs des services de multiples captures ont été faites au prealable avec wireshark dans un environement isolé afin de determiner les serveurs et ip utilisés pour chaque service.
+    - [x] Nous somme egalement servi des librairies pythons socket et IPwhois pour pouvoir résoudre les adresses IP
+    - [x] https://pypi.org/project/ipwhois/ - https://pypi.org/project/socket/
+
 
 ??? note "Mis en place du backend"
     - [x] Implementation d'une API avec Express

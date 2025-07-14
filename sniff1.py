@@ -5,17 +5,20 @@ import socket
 from ipwhois import IPWhois
 import ipaddress
 import json
+import subprocess
+
+# nom du wifi
+# https://stackoverflow.com/questions/33227160/how-do-i-get-python-to-know-what-wifi-the-user-is-connected-to
+# afficher les informations sur le Wi-Fi
+wifi = subprocess.check_output(['netsh', 'WLAN', 'show', 'interfaces'])
+data = wifi.decode('utf-8', errors='ignore')
+print("Nom du Wi-Fi :")
+data = data.split('\n')
+name_w = data[9].split(':')[1].strip()
+print(name_w) 
 
 
-services ={
-    "YouTube": 0,
-    "Netflix": 0,
-    "Spotify": 0,
-    "TikTok": 0,
-    "ChatGPT": 0,
-    "Efootball": 0,
-    "Unknown": 0
-}
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
@@ -57,6 +60,20 @@ def get_hostname(ip):
                 return who.get('asn_description', 'Unknown')
         except Exception as e:
             return "Unknown"    
+
+
+services ={
+    "YouTube": 0,
+    "Netflix": 0,
+    "Spotify": 0,
+    "TikTok": 0,
+    "ChatGPT": 0,
+    "Efootball": 0,
+    "Unknown": 0,
+    "device_name" :my_hostname,
+    "wifi_name": name_w
+}
+
 
 def is_tiktok_domain(domain):
     tiktok_patterns = [

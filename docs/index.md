@@ -101,10 +101,10 @@ Cette approche favorise l’appropriation individuelle des enjeux de durabilité
 | Ouverture de projet            | 1 mai         | Proposition de projet               | ✅ Terminé  |
 | Analyse des exigences          | 16 mai        | Document d'analyse                  | ✅ Terminé |
 | Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | ✅ Terminé  |
-| Prototype 2                    | 30 mai        | Prototype finale + Flux             | 🔄 En cours   |
-| Architecture                   | 30 mai        | Diagramme UML ou modèle C4          | ⏳ À venir  |
-| Modèle de donneés              | 6 juin        | Diagramme UML ou entité-association | ⏳ À venir  |
-| Revue de conception            | 6 juin        | Feedback encadrant + ajustements    | ⏳ À venir  |
+| Prototype 2                    | 30 mai        | Prototype finale + Flux             | ✅ Terminé    |
+| Architecture                   | 30 mai        | Diagramme UML ou modèle C4          | ✅ Terminé   |
+| Modèle de donneés              | 6 juin        | Diagramme UML ou entité-association | ✅ Terminé   |
+| Revue de conception            | 6 juin        | Feedback encadrant + ajustements    | 🔄 En cours  |
 | Implémentation v1              | 20 juin       | Application v1                      | ⏳ À venir  |
 | Implémentation v2 + tests      | 11 juillet    | Application v2 + Tests              | ⏳ À venir  |
 | Implémentation v3              | 1er août      | Version finale                      | ⏳ À venir  |

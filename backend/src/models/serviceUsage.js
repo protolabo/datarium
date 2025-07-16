@@ -10,7 +10,7 @@ export class ServiceUsage {
     this.hosts   = hosts;
     this.listenSec = listenSec; // Durée d'écoute en secondes
     this.category = category;  
-     this.firstSeen = firstSeen; // Catégorie du service 
+    this.firstSeen = firstSeen; // Catégorie du service 
   }
 
   /** Incrémente la fenêtre courante */
@@ -35,7 +35,7 @@ export class ServiceUsage {
       listenSec: this.listenSec,
       category: this.category,
       firstSeen: this.firstSeen,
-       lastSeen  : this.lastSeen
+      lastSeen  : this.lastSeen
     };
   }
 }

@@ -9,11 +9,11 @@ export class ServiceUsageLogRepository {
                     bytes, kwh, co2,
                     windowSec, category }) {
 
-    const svcRef = db.doc(`ssids/${ssid}/services/${service}`);
+    const serviceRef = db.doc(`ssids/${ssid}/services/${service}`);
 
     await db.runTransaction(async (t) => {
       // Lire le doc service pour récupérer (ou créer) le compteur
-      const snap = await t.get(svcRef);
+      const snap = await t.get(serviceRef);
       const cur  = snap.exists && typeof snap.data().windowSeq === 'number'
         ? snap.data().windowSeq
         : 0;
@@ -22,8 +22,8 @@ export class ServiceUsageLogRepository {
       // ID lisible
       const id = `access_${next}`;
 
-      // Sous-collection correcte
-      const winRef = svcRef.collection('accesService').doc(id);
+      // Sous-collection 
+      const winRef = serviceRef.collection('accesService').doc(id);
 
       // Écrire la fenêtre
       t.set(winRef, {
@@ -37,7 +37,7 @@ export class ServiceUsageLogRepository {
       });
 
       // Mettre à jour le compteur dans le doc service
-      t.set(svcRef, { windowSeq: next }, { merge: true });
+      t.set(serviceRef, { windowSeq: next }, { merge: true });
     });
   }
 }

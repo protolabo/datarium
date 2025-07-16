@@ -30,14 +30,14 @@ export class ServiceUsageRepository {
     // 1. Chemin du document Firestore
     const ref = db.doc(`ssids/${ssid}/services/${service}`);
 
-    // 2. Transaction → lecture puis écriture atomiques
+    // 2. Transaction : lecture puis écriture atomiques
     await db.runTransaction(async (t) => {
       // Lecture de l'état courant
       const snap = await t.get(ref);
 
       // Instancie notre entité métier
-      //  - si le doc existe → on part de ses valeurs
-      //  - sinon           → nouveaux compteurs à zéro
+      //  - si le doc existe : on part de ses valeurs
+      //  - sinon  nouveaux compteurs à zéro
       const current = snap.exists
         ? new ServiceUsage({ ...snap.data(), ssid, service })
         : new ServiceUsage({ ssid, service, firstSeen: admin.firestore.FieldValue.serverTimestamp() });

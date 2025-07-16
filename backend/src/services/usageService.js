@@ -5,10 +5,11 @@
 
 
 import { ServiceUsageRepository } from '../models/serviceUsage.repo.js';
-
+import { ServiceUsageLogRepository } from '../models/serviceUsageLog.js';
 export class UsageService {
   // Repository instancié une seule fois (champ privé ES2022)
   #repo = new ServiceUsageRepository();
+  #log  = new ServiceUsageLogRepository();
 
   /**
    * Persiste un lot de mesures.
@@ -18,13 +19,15 @@ export class UsageService {
   async persistBatch(batch, impactSvc) {
     // Parcourt chaque ligne du lot
     for (const it of batch) {
-      const { ssid, service, hostId, bytes } = it;
+      const { ssid, service, hostId, bytes, category, windowSec } = it;
 
       // Conversion octets → kWh / CO₂ via ImpactService
       const { kwh, co2 } = impactSvc.bytesToImpact(bytes);
 
       // Incrément des compteurs dans Firestore (transaction)
-      await this.#repo.increment({ ssid, service, hostId, bytes, kwh, co2 });
+       await this.#repo.increment({ ssid, service, hostId, bytes, kwh, co2, category, windowSec });
+       await this.#log.addWindow({ ssid, service, hostId, bytes, kwh, co2, category, windowSec });
+
     }
   }
 }

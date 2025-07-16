@@ -1,0 +1,18 @@
+[
+  {
+    "ssid"      : "Home_Wifi",
+    "hostId"    : "DESKTOP-A",
+    "service"   : "YouTube",
+    "category"  : "video",
+    "bytes"     : 1048576,
+    "windowSec" : 10
+  },
+  {
+    "ssid"      : "Home_Wifi",
+    "hostId"    : "DESKTOP-A",
+    "service"   : "Spotify",
+    "category"  : "music",
+    "bytes"     : 512000,
+    "windowSec" : 10
+  }
+]

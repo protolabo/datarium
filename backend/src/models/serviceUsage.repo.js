@@ -24,7 +24,9 @@ export class ServiceUsageRepository {
    * @param {number} p.kwh       - kWh de la fenêtre
    * @param {number} p.co2       - g CO₂ de la fenêtre
    */
-  async increment({ ssid, service, hostId, bytes, kwh, co2 }) {
+  // timestamps et le temps d'ecoute de chaque enregistrement de service, les categories de service
+
+  async increment({ ssid, service, hostId, bytes, kwh, co2, category, windowSec }) {
     // 1. Chemin du document Firestore
     const ref = db.doc(`ssids/${ssid}/services/${service}`);
 
@@ -38,22 +40,22 @@ export class ServiceUsageRepository {
       //  - sinon           → nouveaux compteurs à zéro
       const current = snap.exists
         ? new ServiceUsage({ ...snap.data(), ssid, service })
-        : new ServiceUsage({ ssid, service });
+        : new ServiceUsage({ ssid, service, firstSeen: admin.firestore.FieldValue.serverTimestamp() });
 
       // Enregistre l'appareil dans la map "hosts"
       current.hostId = hostId;
 
       // Ajoute la fenêtre courante aux compteurs
-      current.addWindow({ bytes, kwh, co2 });
-
+      current.addWindow({ bytes, kwh, co2, windowSec, category});
+      current.lastSeen = admin.firestore.FieldValue.serverTimestamp();
       // 3. Écriture du document mis à jour
-      t.set(ref, current.toDoc());
+      t.set(ref, current.toDoc(), { merge: true }); 
 
       // 4. Mise à jour du champ "lastSeen" pour le SSID (facilite la purge)
       t.set(
         db.doc(`ssids/${ssid}`),
         { lastSeen: admin.firestore.FieldValue.serverTimestamp() },
-        { merge: true } // on ne modifie pas les autres champs éventuels
+        { merge: true } 
       );
     });
   }

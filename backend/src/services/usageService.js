@@ -1,33 +1,46 @@
 
-// Ce service reçoit un lot de mesures provenant du contrôleur,
-// convertit les octets en kWh / CO₂ via ImpactService, puis délègue au
-// repository pour mettre à jour Firestore.
 
 
-import { ServiceUsageRepository } from '../models/serviceUsage.repo.js';
-import { ServiceUsageLogRepository } from '../models/serviceUsageLog.js';
+import { NetworkRepo }    from '../models/networksRepo.js';
+import { NetworkLogRepo } from '../models/networkLog.js';
+
 export class UsageService {
-  // Repository instancié une seule fois (champ privé ES2022)
-  #repo = new ServiceUsageRepository();
-  #log  = new ServiceUsageLogRepository();
-
   /**
-   * Persiste un lot de mesures.
-   * @param {Array<Object>} batch     - Tableau d'items { ssid, hostId, service, bytes }
-   * @param {ImpactService} impactSvc - Service capable de convertir octets → impact
+   * Persiste un batch de mesures provenant du sniffer
+   * @param {Array}   batch     – payload POST /ingest
+   * @param {object}  impactSvc – instance d’ImpactService
    */
   async persistBatch(batch, impactSvc) {
-    // Parcourt chaque ligne du lot
     for (const it of batch) {
-      const { ssid, service, hostId, bytes, category, windowSec } = it;
+      const {
+        ssid        : networkId,
+        service     : serviceName,
+        hostId,
+        bytes,
+        category,
+        windowSec   : listenSec
+      } = it;
 
-      // Conversion octets → kWh / CO₂ via ImpactService
+      /* conversion énergie / CO₂ */
       const { kwh, co2 } = impactSvc.bytesToImpact(bytes);
 
-      // Incrément des compteurs dans Firestore (transaction)
-       await this.#repo.increment({ ssid, service, hostId, bytes, kwh, co2, category, windowSec });
-       await this.#log.addWindow({ ssid, service, hostId, bytes, kwh, co2, category, windowSec });
+      /* 1. Agrégat réseau (merge + increment) */
+      await NetworkRepo.incrementAggregate({
+        networkId,
+        bytes, kwh, co2,
+        listenSec,
+        hostId
+      });
 
+      /* 2. Journal détaillé (append only) */
+      await NetworkLogRepo.insertLot({
+        networkId,
+        serviceName,
+        hostId,
+        bytes, kwh, co2,
+        listenSec,
+        category
+      });
     }
   }
 }

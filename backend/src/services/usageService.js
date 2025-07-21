@@ -34,11 +34,11 @@ export class UsageService {
 
       /* 2. Journal détaillé (append only) */
       await NetworkLogRepo.insertLot({
-        networkId,
-        serviceName,
+        networkId : ssid,             
+        serviceName: service,
         hostId,
         bytes, kwh, co2,
-        listenSec,
+        listenSec : windowSec,
         category
       });
     }

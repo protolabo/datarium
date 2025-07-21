@@ -39,4 +39,20 @@ export class NetworkRepo {
       }
     });
   }
+  /*Liste des réseaux (GET /networks) */
+  async listAll () {
+    const col = await db.collection('networks')
+                      .orderBy('lastBatchReceived', 'desc')   
+                      .get();
+
+    console.log('NETWORK DOCS', col.docs.map(d => d.id)); //Debug
+    return col.docs.map(d => ({ id: d.id, ...d.data() }));   
+}
+
+  /*  Détails d’un réseau (GET /networks/:id) */
+  async getById (networkId) {
+    const snap = await db.doc(`networks/${networkId}`).get();
+    return snap.exists ? { id: snap.id, ...snap.data() } : null;
+  }
+
 }

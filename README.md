@@ -204,5 +204,5 @@ Payload :
 
 
 Tests rapides: 
-    npm test                # (si tu ajoutes Jest)
+    npm test                
     node src/testFirestore.js   # script utilitaire de purge ou d’index

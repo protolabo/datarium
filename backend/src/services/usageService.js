@@ -1,45 +1,41 @@
+// src/services/usageService.js
+import { ImpactService }   from './impactService.js';
+import { NetworkRepo }     from '../models/networksRepo.js';
+import { NetworkLogRepo }  from '../models/networkLogRepo.js';
 
+const impactSvc = new ImpactService();
 
-
-import { NetworkRepo }    from '../models/networksRepo.js';
-import { NetworkLogRepo } from '../models/networkLog.js';
-
+/**
+ * Persiste un batch complet envoyé par le sniffer.
+ * 1 lot = 1 fenêtre de trafic pour (networkId, service, hostId)
+ */
 export class UsageService {
   /**
-   * Persiste un batch de mesures provenant du sniffer
-   * @param {Array}   batch     – payload POST /ingest
-   * @param {object}  impactSvc – instance d’ImpactService
+   * @param {Array<Object>} batch  tableau d’items { ssid, hostId, service, bytes, windowSec, category }
    */
-  async persistBatch(batch, impactSvc) {
-    for (const it of batch) {
+  static async persistBatch(batch) {
+    for (const lot of batch) {
       const {
-        ssid        : networkId,
-        service     : serviceName,
+        ssid      : networkId,
         hostId,
+        service   : serviceName,
         bytes,
-        category,
-        windowSec   : listenSec
-      } = it;
+        windowSec : listenSec,
+        category
+      } = lot;
 
-      /* conversion énergie / CO₂ */
-      const { kwh, co2 } = impactSvc.bytesToImpact(bytes);
+      /* 1. Conversion d’impact */
+      const { kwh,  co2 } = impactSvc.bytesToImpact(bytes);
 
-      /* 1. Agrégat réseau (merge + increment) */
+      /* 2. Agrégat réseau (collection networks/) */
       await NetworkRepo.incrementAggregate({
-        networkId,
-        bytes, kwh, co2,
-        listenSec,
-        hostId
+        networkId, bytes, kwh, co2, listenSec, hostId
       });
 
-      /* 2. Journal détaillé (append only) */
+      /* 3. Journal plat (collection networkLogs/) */
       await NetworkLogRepo.insertLot({
-        networkId : ssid,             
-        serviceName: service,
-        hostId,
-        bytes, kwh, co2,
-        listenSec : windowSec,
-        category
+        networkId, serviceName, hostId,
+        bytes, kwh, co2, listenSec, category
       });
     }
   }

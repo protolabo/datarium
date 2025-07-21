@@ -171,9 +171,7 @@ Endpoints
     GET	/networkLogs?networkId=&limit=&from=&to=&serviceName=	Recherche dans le journal plat	—
 
 Exemples curl / PowerShell
-powershell
-Copier
-Modifier
+
 # Envoi d’un batch (2 fenêtres)
 $headers = @{ 'X-API-Key' = 'ChangeMe'; 'Content-Type' = 'application/json' }
 $body = @'

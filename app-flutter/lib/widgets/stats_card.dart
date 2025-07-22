@@ -10,12 +10,12 @@ class StatsCard extends StatelessWidget {
   final Color? color;
 
   const StatsCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.label,
     required this.value,
     this.color, // override card color if you like
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,9 @@ class StatsCard extends StatelessWidget {
     return Card(
       color: color ?? theme.colorScheme.surface,
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSpacing.sm)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSpacing.sm),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Row(

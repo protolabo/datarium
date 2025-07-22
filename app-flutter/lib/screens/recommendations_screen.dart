@@ -7,59 +7,60 @@ class RecommendationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Smart Recommendations"),
-        backgroundColor: Colors.green,
+        title: const Text(
+          'Recommandations',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.green),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildCard(
+          _buildRecommendationCard(
             context,
-            "Schedule Mining Hours",
-            "Run mining during off-peak electricity hours.",
-            Colors.orange,
+            "Optimisez les paramètres de streaming",
+            "streaming",
+            Colors.orange.shade100,
           ),
-          _buildCard(
+          const SizedBox(height: 12),
+          _buildRecommendationCard(
             context,
-            "Enable Power Saving Mode",
-            "Activate system-wide energy efficient settings.",
-            Colors.blue,
+            "Programmez des heures de mining",
+            "mining",
+            Colors.purple.shade100,
           ),
-          const SizedBox(height: 20),
-          const Text(
-            "Quick Tips",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          const SizedBox(height: 12),
+          _buildRecommendationCard(
+            context,
+            "Optimisez les paramètres de gaming",
+            "gaming",
+            Colors.blue.shade100,
           ),
-          const SizedBox(height: 10),
-          const Text(
-            "• Close unused browser tabs to reduce background processing.",
-          ),
-          const Text("• Use dark mode to save display energy on OLED screens."),
-          const Text("• Schedule heavy downloads during off-peak hours."),
         ],
       ),
     );
   }
 
-  Widget _buildCard(
+  Widget _buildRecommendationCard(
     BuildContext context,
     String title,
-    String description,
+    String category,
     Color color,
   ) {
-    return Card(
-      color: color.withOpacity(0.2),
-      child: ListTile(
-        title: Text(
-          title,
-          style: TextStyle(color: color, fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(description),
-        trailing: Icon(Icons.arrow_forward, color: color),
-        onTap: () {
-          // Placeholder for deeper navigation
-        },
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(8),
       ),
+      child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
     );
   }
 }

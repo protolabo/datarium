@@ -19,7 +19,9 @@ class DataService {
       final Map<String, dynamic> jsonBody = json.decode(response.body);
       return DataStats.fromJson(jsonBody);
     } else {
-      throw HttpException('Failed to load stats (status ${response.statusCode})');
+      throw HttpException(
+        'Failed to load stats (status ${response.statusCode})',
+      );
     }
   }
 
@@ -34,3 +36,7 @@ class HttpException implements Exception {
   @override
   String toString() => 'HttpException: $message';
 }
+
+
+// TODO Preparer l'appli a recevoir les données du backend
+// Penser à l'integration des widgets de visualisation

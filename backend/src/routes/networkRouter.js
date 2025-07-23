@@ -1,12 +1,26 @@
-// src/routes/networkRouter.js
-import { Router }                 from 'express';
-import * as netCtrl               from '../controllers/networkController.js';
-import * as logCtrl               from '../controllers/networkLogController.js';
+// Regroupe TOUTES les routes HTTP de l’API.
+import { Router }         from 'express';
 
-export default Router()
-  /* lecture */
-  .get   ('/networks',      netCtrl.list)
-  .get   ('/networks/:id',  netCtrl.get)
-  .get   ('/networkLogs',   logCtrl.searchLogs)
-  /* ingestion */
-  .post  ('/ingest',        logCtrl.recordUsageBatch);
+/* contrôleurs */
+import * as netCtrl  from '../controllers/networkController.js';
+import * as logCtrl  from '../controllers/networkLogController.js';
+
+const router = Router();
+
+/* ---------- lecture réseaux ---------- */
+router.get('/networks',          netCtrl.list);        // GET  /networks
+router.get('/networks/:id',      netCtrl.get);         // GET  /networks/Home
+
+/* ---------- lecture logs -------------- */
+router.get('/networkLogs',                   logCtrl.searchLogs);      // ?networkId=&limit=
+router.get('/networkLogs/latest',logCtrl.getLastLog);      // dernier log global
+router.get('/networkLogs/recent',logCtrl.getRecentLogs);     // 10 derniers d’un réseau
+
+/* ---------- catalogue services 
+router.get('/services',          svcCtrl.listServices);               // GET /services
+router.get('/services/:name',    svcCtrl.getServiceByName);           // GET /services/YouTube
+
+/* ---------- Records ---- */
+router.post('/records',          logCtrl.recordUsageBatch);           // POST /records
+
+export default router;

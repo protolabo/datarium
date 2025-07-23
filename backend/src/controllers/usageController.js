@@ -1,4 +1,4 @@
-import { validateBatch }          from '../validators/ingestValidator.js';
+import { validateBatch }          from '../validators/recordsValidator.js';
 import { ImpactService }          from '../services/impactService.js';
 import { UsageService }           from '../services/usageService.js';
 import { NotificationService }    from '../services/notificationService.js';

@@ -16,9 +16,6 @@ router.get('/networkLogs',                   logCtrl.searchLogs);      // ?netwo
 router.get('/networkLogs/latest',logCtrl.getLastLog);      // dernier log global
 router.get('/networkLogs/recent',logCtrl.getRecentLogs);     // 10 derniers d’un réseau
 
-/* ---------- catalogue services 
-router.get('/services',          svcCtrl.listServices);               // GET /services
-router.get('/services/:name',    svcCtrl.getServiceByName);           // GET /services/YouTube
 
 /* ---------- Records ---- */
 router.post('/records',          logCtrl.recordUsageBatch);           // POST /records

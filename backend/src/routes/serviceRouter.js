@@ -2,9 +2,9 @@
 import { Router }         from 'express';
 import * as svcCtrl       from '../controllers/serviceController.js';
 
-export default Router()
-  .get  ('/services',        svcCtrl.list)
-  .post ('/services',        svcCtrl.create)
-  .get  ('/services/:id',    svcCtrl.get)
-  .patch('/services/:id',    svcCtrl.update)
-  .delete('/services/:id',   svcCtrl.remove);
+const router= Router();
+  router.get  ('/services',        svcCtrl.list)
+  router.post ('/services',        svcCtrl.create)
+  router.get  ('/services/:id',    svcCtrl.get)
+  router.delete('/services/:id',   svcCtrl.remove);
+export default router;

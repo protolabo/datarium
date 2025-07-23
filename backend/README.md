@@ -62,8 +62,7 @@ src/
 |---------|-----------------|
 | **`indexRoute.js`** | Monte tous les sous‑routeurs |
 | **`usageRoute.js`** | `POST /ingest` |
-| **`networkRoute.js`** | `GET /networks`, `GET /networks/:id` |
-| **`networkLogRoute.js`** | `GET /networkLogs` (query : `networkId`, `serviceName`, `from`, `to`, `limit`) |
+| **`networkRoute.js`** | `GET /networks`, `GET /networks/:id`, et 'GET /networkLog' |
 | **`serviceRoute.js`** | `GET /services`, `GET /services/:name` |
 
 ---
@@ -92,7 +91,7 @@ src/
 
 | Fichier | But |
 |---------|-----|
-| **`ingestValidator.js`** | Vérifie la structure d’un lot `/ingest` (ssid, service, bytes :number, etc.) → retourne `{ valid, errors[] }` |
+| **`recordsValidator.js`** | Vérifie la structure d’un lot `/ingest` (ssid, service, bytes :number, etc.) → retourne `{ valid, errors[] }` |
 
 ---
 

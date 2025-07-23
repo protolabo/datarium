@@ -3,6 +3,7 @@ import { Router }         from 'express';
 import networkRouter      from './networkRouter.js';
 import serviceRouter      from './serviceRouter.js';
 
-export default Router()
-  .use(networkRouter)
-  .use(serviceRouter);
+const router = Router();
+ router .use(networkRouter)
+ router.use(serviceRouter);
+export default router;

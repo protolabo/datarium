@@ -16,7 +16,7 @@ const parse = (s) => s.split(',').map(Number);
 const thresholdsKwh = parse(THRESHOLDS_KWH);
 const thresholdsCo2 = parse(THRESHOLDS_CO2); 
 export class ImpactService {
-  /** Convertit des octets -> { kwh, co2 } */
+  /** Convertit des octets : { kwh, co2 } */
   bytesToImpact(bytes) {
     const kwh = +(bytes * KWH_FACTOR).toFixed(6);
     const co2 = +(kwh  * CO2_FACTOR).toFixed(2);

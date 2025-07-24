@@ -1,50 +1,47 @@
-from scapy.all import sniff, IP, TCP, UDP, get_if_addr, get_if_list
-import socket
-import re
+import requests
+from scapy.all import sniff, IP, TCP, UDP, get_if_addr, get_if_list, AsyncSniffer
 import socket
 from ipwhois import IPWhois
 import ipaddress
-import json
-import subprocess
+import time
+import threading
+import queue
+from domain import is_tiktok_domain, is_chatgpt, is_efootball_konami, is_netflix, is_youtube, is_spotify
+from network import get_wifi_name, get_my_ip, get_my_hostname, get_interface
 
-# nom du wifi
-# https://stackoverflow.com/questions/33227160/how-do-i-get-python-to-know-what-wifi-the-user-is-connected-to
-# afficher les informations sur le Wi-Fi
-wifi = subprocess.check_output(['netsh', 'WLAN', 'show', 'interfaces'])
-data = wifi.decode('utf-8', errors='ignore')
-print("Nom du Wi-Fi :")
-data = data.split('\n')
-name_w = data[9].split(':')[1].strip()
-print(name_w) 
+# dictionnaire pour stocker les tailles des services puis agrégées toutes les 4 secondes
+aggregate_servvice = {
+    "Tiktok": 0,
+    "Spotify": 0,
+    "ChatGPT": 0,
+    "Youtube": 0,
+    "Netflix": 0,
+    "Efootball": 0,
+    "Unknown": 0
+}
 
+name_wifi = get_wifi_name()
+my_ip = get_my_ip() # l'ip local
+my_hostname = get_my_hostname(my_ip) # le hostname local 
+interface = get_interface(my_ip) # l'interface de capture
 
+dns_cahe= {}
+dns_queue = queue.Queue()
 
-
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("8.8.8.8", 80))
-print("Ton ip est : "+ s.getsockname()[0])
-my_ip = s.getsockname()[0]  # l'ip local
-s.close()  
-try:
-    my_hostname = socket.gethostbyaddr(my_ip)[0]
-    print("Ton hostname est : "+ my_hostname)
-except socket.herror:
-    my_hostname = 'Unknown'
-
-# https://scapy.readthedocs.io/en/stable/api/scapy.interfaces.html
-#https://scapy.readthedocs.io/en/latest/routing.html
-interfaces = get_if_list()    
-for iface in interfaces:
-    try:
-        interface_ip = get_if_addr(iface)
-        if interface_ip == my_ip:
-            print(f"Interface trouvée {my_ip} : {iface}")
-            interface = iface
+stop_thread = False
+def dns_search():
+    while True:
+        global stop_thread
+        if stop_thread:
             break
-    except Exception as e:
-        print(f"Erreur durant la récupération de l'IP pour l'interface {iface}: {e}")
+        ip= dns_queue.get()
+        if ip not in dns_cahe or dns_cahe[ip]== "Unknown":
+            dns_cahe[ip] = get_hostname(ip)
+        dns_queue.task_done() 
 
-
+#thread qui va effectuer la recherche DNS pour eviter de perdre des paquets durant la capture
+dsnThread = threading.Thread(target=dns_search, daemon=True)
+dsnThread.start()
 
 def get_hostname(ip):
     try:
@@ -62,152 +59,94 @@ def get_hostname(ip):
             return "Unknown"    
 
 
-services ={
-    "YouTube": 0,
-    "Netflix": 0,
-    "Spotify": 0,
-    "TikTok": 0,
-    "ChatGPT": 0,
-    "Efootball": 0,
-    "Unknown": 0,
-    "device_name" :my_hostname,
-    "wifi_name": name_w
-}
-
-
-def is_tiktok_domain(domain):
-    tiktok_patterns = [
-    r'(^|\.)muscdn\.com$',
-    r'(^|\.)musical\.ly$',
-    r'(^|\.)tiktok\.com$',
-    r'(^|\.)tiktok\.org$',
-    r'(^|\.)tiktokcdn\.com$',
-    r'^a[\d-]+\.deploy\.static\.akamaitechnologies\.com$',
-    r'^a\d+\.r\.akamai\.net$',
-    r'^[\w\d-]+\.api2\.akamaiedge\.net$',
-    ]
-    if domain and domain != "Unknown":
-        for pattern in tiktok_patterns:
-            if re.match(pattern, domain):
-                return True
-        if domain.__contains__("TIKTOK") or domain.__contains__("BYTEDANCE"):
-            return True    
-    return False    
-    
-def is_chatgpt(domain):
-    if domain and domain != "Unknown":
-        if domain.__contains__("CHATGPT") or domain.__contains__("OPENAI") or domain.__contains__("CLOUDFLARE"):
-            return True
-    return False
-
-#https://www.appsruntheworld.com/customers-database/customers/view/konami-digital-entertainment-uk-united-kingdom
-def is_efootball_konami(domain):
-    konami_patterns = [
-    r'^([\w-]+\.)*cloudfront\.net$',
-    r'^([\w-]+\.)*compute\.amazonaws\.com$',
-    ]
-    if domain and domain != "Unknown":
-        for pattern in konami_patterns:
-            if re.match(pattern, domain):
-                return True
-    #pratiquement sur que ca ne sera jamais exécuté car gethostbyaddr renvoie touours une response
-    return False
-                                                                            
-
-def is_netflix(domain):
-    netflix_patterns = [
-    r'^([\w-]+\.)*nflxvideo\.net$',
-    ]
-    if domain and domain != "Unknown":
-        for pattern in netflix_patterns:
-            if re.match(pattern, domain):
-                return True   
-    return False   
-
-def is_youtube(domain):
-    youtube_patterns = [
-    r'^r\d+\.sn-[\w-]+\.googlevideo\.com$',      
-    r'^rr\d+\.sn-[\w-]+\.googlevideo\.com$',     
-    r'^[\w-]+\.1e100\.net$',                     
-    r'^i\.ytimg\.com$',                          
-    r'^yt[3-5]\.ggpht\.com$',                    
-    r'^m?\.?youtube(-nocookie)?\.com$',          
-    r'^youtubei\.googleapis\.com$',              
-    ]
-    if domain and domain != "Unknown":
-        for pattern in youtube_patterns:
-            if re.match(pattern, domain):
-                return True
-    return False
-
-def is_spotify(domain):
-    spotify_patterns = [r'^([\w-]+\.)*spotifycdn\.map\.fastly\.net$',
-    r'^([\w-]+\.)*scdn\.co$',
-    r'^([\w-]+\.)*spotify\.com$',
-    r'^([\w-]+\.)*spclient\.wg\.spotify\.com$']
-    if domain and domain != "Unknown":
-        for pattern in spotify_patterns:
-            if re.match(pattern, domain):
-                return True
-        if domain.__contains__("FASTLY") or domain.__contains__("SPOTIFY"):
-            return True      
-    return False
-
-proto_names = {
-    6: "TCP",
-    17: "UDP",
-    
-}
-
 def paquet(packet):
     if IP in packet:
-        proto = proto_names.get(packet[IP].proto)
         src, dst = packet[IP].src, packet[IP].dst
-        sport = packet.sport if TCP in packet or UDP in packet else None
-        dport = packet.dport if TCP in packet or UDP in packet else None
-        print(f"---------------------------------------------------------------")
-        print(f"src Ip:{src}, src port:{sport} --> dst Ip:{dst}, dst port:{dport}")
-        names= get_hostname(src)  ## ici j'utilise les sockets au lieu de get_whois car j'ai juste 50k/mois je limite les appels
-        named= get_hostname(dst)  ## mm chose
-        if names != my_hostname and names != "Unknown":
-            domain_p = names
+
+        if src not in dns_cahe:
+            dns_cahe[src] = "Unknown"
+            dns_queue.put(src)    
+        if dst not in dns_cahe:
+            dns_cahe[dst] = "Unknown"
+            dns_queue.put(dst)    
+            
+        name_source= dns_cahe[src]
+        name_destination = dns_cahe[dst]
+
+        if name_source != my_hostname and name_source != "Unknown":
+            domain_name = name_source
         else:
-            if named != my_hostname and named != "Unknown":
-                domain_p = named
+            if name_destination != my_hostname and name_destination != "Unknown":
+                domain_name = name_destination
             else:
-                domain_p = "Unknown"    
+                domain_name = "Unknown"   
+
         size = len(packet)
-        if is_tiktok_domain(domain_p):
-            print(f"[TikTok] {names} <--> {named}")
-            services["TikTok"] += size
-        elif is_spotify(domain_p):
-            print(f"[Spotify] {names} <--> {named}") 
-            services["Spotify"] += size  
-        elif is_chatgpt(domain_p):
-            print(f"[ChatGPT] {names} <--> {named}")  
-            services["ChatGPT"] += size   
-        elif is_youtube(domain_p):
-            print(f"[YouTube] {names} <--> {named}")
-            services["YouTube"] += size
-        elif is_netflix(domain_p):
-            print(f"[Netflix] {names} <--> {named}")
-            services["Netflix"] += size
-        elif is_efootball_konami(domain_p):
-            print(f"[Efootball] {names} <--> {named}")
-            services["Efootball"] += size    
+
+        if is_tiktok_domain(domain_name):
+            aggregate_servvice["Tiktok"] += size 
+        elif is_spotify(domain_name): 
+            aggregate_servvice["Spotify"] += size
+        elif is_chatgpt(domain_name): 
+            aggregate_servvice["ChatGPT"] += size
+        elif is_youtube(domain_name):
+            aggregate_servvice["Youtube"] += size
+        elif is_netflix(domain_name):
+            aggregate_servvice["Netflix"] += size
+        elif is_efootball_konami(domain_name):
+            aggregate_servvice["Efootball"] += size  
         else:
-            print(f"Unknown {names} <--> {named}")
-            services["Unknown"] += size
-        print(f"Protocol: {proto}")
-        print(f"Packet Length: {len(packet)} bytes")
-        save_services_files()  ## je mets a jour le fichier services.json chque fois qu'un paquet est capturé
-      
+            aggregate_servvice["Unknown"] += size
+            
+def send_services_to_backend(service, size, time):
+    try:
+        categories = {
+            "Tiktok": "video",
+            "Spotify": "music",
+            "ChatGPT": "ai",
+            "Youtube": "video",
+            "Netflix": "video",
+            "Efootball": "game",
+            "Unknown": "unknown"
+        }
 
+        data = {
+            "ssid":name_wifi,
+            "hostId": my_hostname,
+            "service": service,
+            "category":categories.get(service, "unknown"),
+            "bytes":size,
+            "windowSec":time 
+        }
 
-def save_services_files():
-    with open("services.json", "w") as f:
-        json.dump(services, f, indent=4)
-    print("le service a été sauvegardé dans le fichier services.json")
+        headers = {'X-API-Key' : 'ChangeMe', 'Content-type': 'application/json'}
+        response = requests.post(
+            "http://localhost:8000/records",
+            headers=headers,
+            json=data
+        )
+        print(response.text)
 
-sniff(iface=interface, filter="(host "+my_ip+")", prn=paquet, store=False)
-# iface est l'interface de capture, vous pouvez la changer selon votre réseau 
+    except Exception as e:
+        print(f"Erreur durant l'evoi au backend: {e}")
+
+sniffer = AsyncSniffer(iface=interface, filter="(host "+my_ip+") and not (host 192.168.2.123 or host 192.168.2.1) and (tcp or udp)", prn=paquet, promisc=True, store=False)# iface est l'interface de capture, vous pouvez la changer selon votre réseau 
+
+sniffer.start()
+while True:
+    try:
+        for service, size in aggregate_servvice.items():
+            if size > 500:       # je mets ce seuil pour ne pas envoyer des données inutiles
+                send_services_to_backend(service, size, 4)
+
+        for service in aggregate_servvice:       # on remet a 0 les valeurs pour le prochain envoi
+            aggregate_servvice[service] = 0
+
+        time.sleep(4) # envoyer les données a l'esp32 toutes les 4 secondes
+        
+    except KeyboardInterrupt:
+        sniffer.stop()
+        print("fin de la capture.")
+        stop_thread = True
+        dsnThread.join()
+        break

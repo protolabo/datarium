@@ -19,3 +19,21 @@ export async function get (req, res, next) {
     res.json(net);
   } catch (e) { next(e); }
 }
+
+/* GET /networkStatsEsp32 */
+export async function getEsp32Stats (req, res, next) {
+try {
+    const stat_General = await repo.listAll();
+    if (!stat_General) return res.status(404).json({ error: 'No networks found' });
+    let TotalBytes = 0;
+    let TotalListenSec = 0;
+    for (const network of stat_General){
+      TotalBytes += network.bytes || 0;
+      TotalListenSec += network.listenSec || 0;
+    }
+    res.json({
+      bytes: TotalBytes,
+      listenSec: TotalListenSec
+    });
+  } catch (e) { next(e); }
+}

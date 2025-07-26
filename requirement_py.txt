@@ -1,0 +1,6 @@
+scapy
+socket
+re
+ipwhois
+json
+ipaddress

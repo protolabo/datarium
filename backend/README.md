@@ -156,7 +156,7 @@ et ajoute‑le au .gitignore.
 
 Endpoints
     Méthode	URL	Description	Auth
-    POST	/ingest	Envoie un ou plusieurs lots de trafic	Header X-API-Key
+    POST	/records	Envoie un ou plusieurs lots de trafic	Header X-API-Key
     GET	/networks	Liste tous les réseaux (tri DESC par lastBatchReceived)	—
     GET	/networks/:id	Détails d’un réseau	—
     GET	/networkLogs?networkId=&limit=&from=&to=&serviceName=	Recherche dans le journal plat	—
@@ -173,7 +173,7 @@ $body = @'
     "category":"video","bytes":524288,"windowSec":5  }
 ]
 '@
-Invoke-RestMethod -Method Post -Uri "http://localhost:8000/ingest" `
+Invoke-RestMethod -Method Post -Uri "http://localhost:8000/records" `
                   -Headers $headers -Body $body
 
 

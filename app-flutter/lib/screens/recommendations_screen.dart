@@ -30,12 +30,7 @@ class RecommendationsScreen extends StatelessWidget {
             Colors.orange.shade100,
           ),
           const SizedBox(height: 12),
-          _buildRecommendationCard(
-            context,
-            "Programmez des heures de mining",
-            "mining",
-            Colors.purple.shade100,
-          ),
+          
           const SizedBox(height: 12),
           _buildRecommendationCard(
             context,

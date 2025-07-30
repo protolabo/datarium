@@ -65,9 +65,8 @@ class SplashScreen extends StatelessWidget {
 
 */
 
+import 'package:datarium/screens/main_navigation.dart';
 import 'package:flutter/material.dart';
-import '../models/filter_option.dart';
-import 'dashboard_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -102,21 +101,12 @@ class SplashScreen extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder:
-                        (_) => DashboardScreen(
-                          filters: [
-                            FilterOption(name: 'Mining', isSelected: true),
-                            FilterOption(name: 'Streaming', isSelected: true),
-                            FilterOption(name: 'Gaming', isSelected: true),
-                            FilterOption(name: 'AI/ LLM', isSelected: true),
-                          ],
-                        ),
-                  ),
+                  MaterialPageRoute(builder: (_) => const MainNavigation()),
                 );
               },
+
               child: const Text("Démarrer"),
             ),
             const SizedBox(height: 24),

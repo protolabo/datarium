@@ -1,69 +1,101 @@
-import 'package:flutter/material.dart';
 
+/*
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'settings_provider.dart';
 import 'dashboard_screen.dart';
 import 'history_screen.dart';
-import 'settings_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
   Widget build(BuildContext context) {
+    final settings = Provider.of<SettingsProvider>(context);
+
     return Scaffold(
+      backgroundColor: Colors.green[50],
       appBar: AppBar(
-        title: const Text(
-          'Paramètres',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.green),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
         ),
+        title: const Text(
+          "Paramètres",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
-      body: Container(
-        color: Colors.green[100],
-        width: double.infinity,
-        height: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.green[100],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ListTile(
-                leading: Icon(Icons.notifications),
-                title: Text('Notifications'),
-                trailing: Switch(value: true, onChanged: null),
+              _buildSettingRow(
+                icon: Icons.notifications,
+                text: "Notifications",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.notificationsEnabled,
+                  onChanged: settings.toggleNotifications,
+                ),
               ),
-              const ListTile(
-                leading: Icon(Icons.add_to_photos),
-                title: Text('Recevoir rappels'),
-                trailing: Switch(value: false, onChanged: null),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.add_to_photos,
+                text: "Recevoir rappels",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.remindersEnabled,
+                  onChanged: settings.toggleReminders,
+                ),
               ),
-              const ListTile(
-                leading: Icon(Icons.language),
-                title: Text('Langue'),
-                trailing: Text('Français >'),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.language,
+                text: "Langue",
+                trailing: DropdownButton<Locale>(
+                  value: settings.locale,
+                  underline: const SizedBox(),
+                  onChanged: (locale) {
+                    if (locale != null) {
+                      settings.changeLanguage(locale);
+                    }
+                  },
+                  items: const [
+                    DropdownMenuItem(
+                      value: Locale('fr'),
+                      child: Text("Français"),
+                    ),
+                    DropdownMenuItem(
+                      value: Locale('en'),
+                      child: Text("English"),
+                    ),
+                  ],
+                ),
               ),
-              const ListTile(
-                leading: Icon(Icons.brightness_2),
-                title: Text('Thème'),
-                trailing: Text('Light'),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.nightlight_round,
+                text: "Thème",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.isDarkTheme,
+                  onChanged: settings.toggleTheme,
+                ),
               ),
             ],
           ),
         ),
       ),
 
-      // ✅ Nouvelle bottom bar
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.grey[300],
         selectedItemColor: Colors.green,
@@ -72,9 +104,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           if (index == 0) {
-            // déjà sur Profile (Paramètres)
+            // Tu es déjà ici
           } else if (index == 1) {
-            // Puce → rien
+            // ESP32 → rien à faire
           } else if (index == 2) {
             Navigator.push(
               context,
@@ -83,22 +115,308 @@ class _ProfileScreenState extends State<ProfileScreen> {
           } else if (index == 3) {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => DashboardScreen(filters: const []),
-              ),
+              MaterialPageRoute(builder: (_) => DashboardScreen()),
             );
           }
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
           BottomNavigationBarItem(icon: Icon(Icons.memory), label: 'Datarium'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.access_time),
-            label: 'Historique',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.access_time), label: 'Historique'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         ],
       ),
+    );
+  }
+
+  Widget _buildSettingRow({
+    required IconData icon,
+    required String text,
+    required Widget trailing,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.black),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
+        trailing,
+      ],
+    );
+  }
+}
+
+*/
+// lib/screens/profile_screen.dart
+
+
+/*
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'settings_provider.dart';
+import 'dashboard_screen.dart';
+import 'history_screen.dart';
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = Provider.of<SettingsProvider>(context);
+
+    return Scaffold(
+      backgroundColor: Colors.green[50],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "Paramètres",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.green[100],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+          child: Column(
+            children: [
+              _buildSettingRow(
+                icon: Icons.notifications,
+                text: "Notifications",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.notificationsEnabled,
+                  onChanged: settings.toggleNotifications,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.add_to_photos,
+                text: "Recevoir rappels",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.remindersEnabled,
+                  onChanged: settings.toggleReminders,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.language,
+                text: "Langue",
+                trailing: DropdownButton<Locale>(
+                  value: settings.locale,
+                  underline: const SizedBox(),
+                  onChanged: (locale) {
+                    if (locale != null) {
+                      settings.changeLanguage(locale);
+                    }
+                  },
+                  items: const [
+                    DropdownMenuItem(
+                      value: Locale('fr'),
+                      child: Text("Français"),
+                    ),
+                    DropdownMenuItem(
+                      value: Locale('en'),
+                      child: Text("English"),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.nightlight_round,
+                text: "Thème",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.isDarkTheme,
+                  onChanged: settings.toggleTheme,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey[300],
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.green,
+        currentIndex: 0,
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          if (index == 0) {
+            // Tu es déjà ici
+          } else if (index == 1) {
+            // ESP32 → rien à faire
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const HistoryScreen()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => DashboardScreen()),
+            );
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+          BottomNavigationBarItem(icon: Icon(Icons.memory), label: 'Datarium'),
+          BottomNavigationBarItem(icon: Icon(Icons.access_time), label: 'Historique'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSettingRow({
+    required IconData icon,
+    required String text,
+    required Widget trailing,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.black),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
+        trailing,
+      ],
+    );
+  }
+}
+
+*/
+// lib/screens/profile_screen.dart
+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'settings_provider.dart';
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = Provider.of<SettingsProvider>(context);
+
+    return Scaffold(
+      backgroundColor: Colors.green[50],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          "Paramètres",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.green[100],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+          child: Column(
+            children: [
+              _buildSettingRow(
+                icon: Icons.notifications,
+                text: "Notifications",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.notificationsEnabled,
+                  onChanged: settings.toggleNotifications,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.add_to_photos,
+                text: "Recevoir rappels",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.remindersEnabled,
+                  onChanged: settings.toggleReminders,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.language,
+                text: "Langue",
+                trailing: DropdownButton<Locale>(
+                  value: settings.locale,
+                  underline: const SizedBox(),
+                  onChanged: (locale) {
+                    if (locale != null) {
+                      settings.changeLanguage(locale);
+                    }
+                  },
+                  items: const [
+                    DropdownMenuItem(
+                      value: Locale('fr'),
+                      child: Text("Français"),
+                    ),
+                    DropdownMenuItem(
+                      value: Locale('en'),
+                      child: Text("English"),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildSettingRow(
+                icon: Icons.nightlight_round,
+                text: "Thème",
+                trailing: Switch(
+                  activeColor: Colors.green,
+                  value: settings.isDarkTheme,
+                  onChanged: settings.toggleTheme,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSettingRow({
+    required IconData icon,
+    required String text,
+    required Widget trailing,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.black),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
+        trailing,
+      ],
     );
   }
 }

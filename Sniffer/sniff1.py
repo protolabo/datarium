@@ -113,7 +113,7 @@ def paquet(packet):
 def send_services_to_backend(service, size, time, hostID):
     
     if hostID == None or hostID == "Unknown":
-        hostID = "non connue"
+        hostID = "non identifié"
     try:
         categories = {
             "Tiktok": "video",

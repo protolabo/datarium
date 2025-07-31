@@ -20,6 +20,10 @@ aggregate_servvice = {
     "Unknown": 0
 }
 
+host_ID_dic = {
+    "hostID": ""
+}
+
 name_wifi = get_wifi_name()
 my_ip = get_my_ip() # l'ip local
 my_hostname = get_my_hostname(my_ip) # le hostname local 
@@ -45,14 +49,14 @@ dsnThread.start()
 
 def get_hostname(ip):
     try:
-        name = socket.gethostbyaddr(ip)[0] if ip != my_ip else my_hostname
+        name = socket.gethostbyaddr(ip)[0] 
     except socket.herror:
         name = "Unknown"
     if name != "Unknown":
         return name
     else:  
         try:
-            if not ipaddress.ip_address(ip).is_private and ip != my_ip:
+            if not ipaddress.ip_address(ip).is_private:
                 who = IPWhois(ip).lookup_rdap()
                 return who.get('asn_description', 'Unknown')
         except Exception as e:
@@ -73,10 +77,18 @@ def paquet(packet):
         name_source= dns_cahe[src]
         name_destination = dns_cahe[dst]
 
-        if name_source != my_hostname and name_source != "Unknown":
+        if ipaddress.ip_address(src).is_private and name_source != "Unknown":
+            host_ID_dic["hostID"] = name_source
+        elif ipaddress.ip_address(dst).is_private and name_destination != "Unknown":
+            host_ID_dic["hostID"] = name_destination
+        else:
+            host_ID_dic["hostID"] = "Unknown"
+        
+
+        if not ipaddress.ip_address(src).is_private and name_source != "Unknown":
             domain_name = name_source
         else:
-            if name_destination != my_hostname and name_destination != "Unknown":
+            if not ipaddress.ip_address(dst).is_private and name_destination != "Unknown":
                 domain_name = name_destination
             else:
                 domain_name = "Unknown"   
@@ -98,7 +110,10 @@ def paquet(packet):
         else:
             aggregate_servvice["Unknown"] += size
             
-def send_services_to_backend(service, size, time):
+def send_services_to_backend(service, size, time, hostID):
+    
+    if hostID == None or hostID == "Unknown":
+        hostID = "non connue"
     try:
         categories = {
             "Tiktok": "video",
@@ -112,7 +127,7 @@ def send_services_to_backend(service, size, time):
 
         data = {
             "ssid":name_wifi,
-            "hostId": my_hostname,
+            "hostId": hostID,
             "service": service,
             "category":categories.get(service, "unknown"),
             "bytes":size,
@@ -125,19 +140,18 @@ def send_services_to_backend(service, size, time):
             headers=headers,
             json=data
         )
-        print(response.text)
 
     except Exception as e:
         print(f"Erreur durant l'evoi au backend: {e}")
 
-sniffer = AsyncSniffer(iface=interface, filter="(host "+my_ip+") and not (host 192.168.2.123 or host 192.168.2.1) and (tcp or udp)", prn=paquet, promisc=True, store=False)# iface est l'interface de capture, vous pouvez la changer selon votre réseau 
+sniffer = AsyncSniffer(iface=interface, filter="(tcp or udp)", prn=paquet, promisc=True, store=False)# iface est l'interface de capture, vous pouvez la changer selon votre réseau 
 
 sniffer.start()
 while True:
     try:
         for service, size in aggregate_servvice.items():
-            if size > 500:       # je mets ce seuil pour ne pas envoyer des données inutiles
-                send_services_to_backend(service, size, 4)
+            if size > 1500:       # je mets ce seuil pour ne pas envoyer des données inutiles
+                send_services_to_backend(service, size, 4, host_ID_dic["hostID"])
 
         for service in aggregate_servvice:       # on remet a 0 les valeurs pour le prochain envoi
             aggregate_servvice[service] = 0

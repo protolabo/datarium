@@ -24,6 +24,8 @@ Exigences fonctionnelles :
 
 5. Le système doit fonctionner sur Android (détection automatique) et iOS (mode manuel).
 
+6. L'utilisateur peut choisir la categorie ou service a mesurer 
+
 Exigences non fonctionnelles :
 
 1. La solution doit être simple et intuitive à utiliser.
@@ -62,9 +64,9 @@ L’approche de Datarium est simplifiée (pas de VPN local, pas de contrôle ré
 
 Utilisation d'une application Flutter (Android + iOS) pour la détection et la visualisation de l'impact numérique.
 
-Communication entre l’application et l’Arduino Zero via Bluetooth.
+Communication entre l’application et l’ESP32 via Bluetooth.
 
-Arduino Zero reçoit les instructions et traduit l’impact en un signal tangible (LED, jauge).
+ESP32 reçoit les instructions et traduit l’impact en un signal tangible (LED, jauge).
 
 Estimation de la consommation selon le service sélectionné :
 

@@ -32,7 +32,7 @@ Exigences non fonctionnelles :
 
 2. L'affichage de l'impact doit être clair (vert, jaune, rouge).
 
-3. Le dispositif doit être économe en énergie (Arduino Zero + Bluetooth).
+3. Le dispositif doit être économe en énergie.
 
 4. La latence entre la détection de l'impact et l'affichage doit être inférieure à 1 seconde.
 

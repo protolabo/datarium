@@ -68,8 +68,8 @@
      - [x] Pensez à répéter chaque test plusieurs fois pour obtenir une moyenne.
 
 ## Semaine 5
-    - [x] Faire la correction du prototype 2 sur Figma 
-    - [x] Faire le modele C4 
+ - [x] Faire la correction du prototype 2 sur Figma 
+ - [x] Faire le modele C4 
 
 ## Semaine 6
 - [x] Commencer le front end de l'application avec flutter
@@ -113,13 +113,37 @@
 
 ## Semaine 9
 
-- [] Codage de l'application avec flutter
-- [] Revision de la structure du backend et base de donne
-- [] Test du sniffer
+- [x] Codage de l'application avec flutter
+- [x] Revision de la structure du backend et base de donne
+- [x] Test du sniffer
+
 ## Semaine 10
+
+- [x] Codage de l'application avec flutter
+- [x] Connexion de l'api au sniffer
+- [x] Set up de la carte ESP32
+- [x] Codage de l'ESP32
+- [x] test du sniffer avec l'api
+
 
 ## Semaine 11
 
+- [x] Codage de l'application avec flutter
+- [x] test 3 du sniffer avec l'api
+- [x] ajout du diagramme de la base de donnee et de l'api
+- [x] Mis a jour de la page conception
+- [] Ajout du pdf sur la synthese des article dans la page etude preliminaire
+
+
+!!! info "Notes"
+    - Nous avons enlever le filtre du sniffer qui ne receuillait que le traffic du pc.
+
+
 ## Semaine 12
+
+- [] Ecriture du rapport
+- [] Preparation d ela presentation du projet
+
+
 
 ## Semaine 13

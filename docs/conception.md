@@ -2,7 +2,7 @@
 
 ## Architecture
 ### Modele C4
-![Modele C4](images/ModeleC4.svg)
+![Modele C4](images/datarium.svg)
 
 - Décrire l'architecture du système proposé.
 

@@ -1,6 +1,5 @@
-// lib/src/services/data_service.dart
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../models/data_stats.dart';
 
@@ -8,8 +7,13 @@ class DataService {
   final String baseUrl;
   final http.Client _client;
 
-  DataService({this.baseUrl = 'https://api.example.com', http.Client? client})
-    : _client = client ?? http.Client();
+  DataService({String? baseUrl, http.Client? client})
+    : baseUrl =
+          baseUrl ??
+          (Platform.isAndroid
+              ? 'http://10.0.2.2:8000'
+              : 'http://localhost:8000'),
+      _client = client ?? http.Client();
 
   Future<DataStats> fetchDataStats() async {
     final uri = Uri.parse('$baseUrl/stats');
@@ -36,7 +40,3 @@ class HttpException implements Exception {
   @override
   String toString() => 'HttpException: $message';
 }
-
-
-// TODO Preparer l'appli a recevoir les données du backend
-// Penser à l'integration des widgets de visualisation

@@ -2,10 +2,10 @@ class DataStats {
   final double dataRate;
   final int duration;
   final double recentData;
-  final double miningConsumption;   // TODO: Refactor into ConsumptionModel
-  final double streamingConsumption;// TODO: Refactor into ConsumptionModel
-  final double gamingConsumption;   // TODO: Refactor into ConsumptionModel
-  final double aiConsumption;       // TODO: Refactor into ConsumptionModel
+  final double miningConsumption; // TODO: Refactor into ConsumptionModel
+  final double streamingConsumption; // TODO: Refactor into ConsumptionModel
+  final double gamingConsumption; // TODO: Refactor into ConsumptionModel
+  final double aiConsumption; // TODO: Refactor into ConsumptionModel
 
   DataStats({
     required this.dataRate,

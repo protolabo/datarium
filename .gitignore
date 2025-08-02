@@ -127,3 +127,4 @@ backend/.env
 
 # Clé privée Firebase Admin 
 backend/src/services/serviceAccount.json
+backend/src/config/firebasekey.json

@@ -10,66 +10,64 @@
 
 Pour ce projet nous devions :
 
- - Collecter le trafic réseau en provenance de sniffeurs.
+ - Collecte du trafic réseau: Mettre en place une solution capable de capturer et d’analyser le trafic réseau sur un segment donné (via   un sniffer réseau), en respectant les contraintes de confidentialité.
 
- - Calculer son impact énergétique (kWh / g CO₂).
+ -  Identification des services Internet sollicités: Analyser les requêtes réseau pour identifier les services ou applications en ligne utilisées (ex. : YouTube, Google Maps, Facebook, ChatPGT).
 
- - Stocker et agréger ces données de façon fiable.
+ - Évaluation de l’impact énergétique par requête: Estimer la consommation énergétique et les émissions de CO₂ associées à chaque          requête.  Les unités de mesure seront standardisées en kWh et grammes de CO₂.
 
- - Diffuser en temps réel un « thermomètre » couleur vers une application mobile ou sur la composante (ESP32).
+ - Stockage et agrégation des données: Implémenter une architecture de stockage fiable et scalable pour enregistrer les données de trafic analysé et les mesures d’impact énergétique.
 
-Les technologies ci-dessous ont été choisies car elles répondent à ces contraintes tout en restant simples à mettre en œuvre et à maintenir.
+ - Diffusion en temps réel vers des clients externes Mettre en œuvre un mécanisme de diffusion des données agrégées en quasi temps réel vers des applications mobiles et/ou des dispositifs embarqués (ESP32).
+
+ Les technologies ci-dessous ont été choisies car elles répondent à ces contraintes tout en restant simples à mettre en œuvre et à maintenir.
 
 #### Backend : Node 18 + Express
-Nous avons retenu Node JS car JavaScript est déjà connu de l’équipe et possède un écosystème immense.
-Express offre un routeur HTTP très léger ; on ajoute seulement les middlewares dont on a besoin (CORS, JSON, API-Key).
+Plutôt que d’opter pour des environnements plus lourds (Spring Boot en Java, Django en Python), nous avons privilégié Node JS : le langage JavaScript est déjà familier et l’écosystème NPM regorge de bibliothèques prêtes à l’emploi.
+Express ajoute à Node les éléments qui manquent pour définir des routes HTTP et traiter les requêtes ; il transforme ainsi le moteur brut de Node en un serveur web léger et directement exploitable. Cette légèreté permet de comprendre la mécanique interne en quelques heures et de modifier un endpoint sans délai : un simple nodemon redémarre le serveur dès qu’un fichier change et l’API répond à nouveau en moins d’une seconde.
 
+En pratique, Node 18 + Express sert de point central et satisfait deux des exigences majeures du projet :
 
-Avantage principal : cycle de développement rapide – un nodemon relance le serveur dès qu’on modifie un fichier.
+Stockage et agrégation fiables – le moteur événementiel non bloquant de Node ingère chaque lot JSON posté par le sniffeur dès son arrivée ; les middlewares Express (body-parser, validation, API-Key) le font passer dans un contrôleur qui calcule l’impact énergétique, puis déclenchent des appels atomiques vers Cloud Firestore. Les transactions Firestore, pilotées depuis le code Node, garantissent que l’agrégat (collection networks) et le journal brut (collection networkLogs) sont tenus à jour dans la même milliseconde, sans risque d’incohérence même lorsque plusieurs sniffeurs publient en parallèle.
+
+Diffusion quasi temps réel – Express reste assez léger pour laisser Socket.io s’installer dans le même processus : aussitôt qu’un lot est persisté, on émet un io.emit('thermo', payload) ; la boucle d’événements de Node, optimisée pour l’I/O, relaye l’information aux applis Flutter et à l’ESP32 sans thread bloquant ni polling. Résultat : le thermomètre change de couleur sous 100 ms sur Wi-Fi local, répondant pleinement à l’exigence de diffusion instantanée.
 
 #### Temps réel : Socket.io
-Le « thermomètre » doit changer de couleur instantanément.
-Socket.io masque la complexité du WebSocket : une simple ligne io.emit('thermo', payload) côté serveur et socket.on('thermo', …) côté mobile.
-
+L’affichage du thermomètre doit se mettre à jour immédiatement lorsqu’un nouveau lot de trafic est reçu. Plutôt que de forcer l’application mobile à interroger l’API toutes les deux secondes (technique dite de polling, énergivore et coûteuse), nous utilisons Socket.io. Cette librairie encapsule la technologie WebSocket : côté serveur on diffuse en une ligne io.emit('thermo', payload), côté client on écoute socket.on('thermo', …). L’abstraction gère d’elle-même les déconnexions, les tentatives de reconnexion et même un repli sur HTTP longue-polling si le pare-feu bloque les WebSocket, sans que nous ayons à coder ces cas particuliers.
 
 #### Base de données : Firebase / Cloud Firestore
-Nous voulions :
+Nos données se répartissent en deux familles très différentes :
 
- - un schéma flexible (les logs bruts et les agrégats n’ont pas le même format) ;
+ - des documents « bruts » – chaque fenêtre de 4 secondes provenant d’un sniffer ;
 
- - des transactions atomiques sans config complexe ;
+ - des agrégats – un compteur global par réseau Wi-Fi.
 
- - zéro serveur à maintenir.
+Un schéma relationnel rigide  tel que SQL aurait imposé des jointures complexes ou des migrations fréquentes. Firestore, base NoSQL entièrement gérée par Google, accepte au contraire des documents de formes variées dans une même collection et applique des transactions ACID (Atomicite Coherence Isolation et Durabilite) en une seule instruction. De plus, aucun serveur n’est à installer : la base se dimensionne toute seule selon le volume de requêtes. 
 
-Firestore y répond parfaitement : c’est du NoSQL managé par Google, il s’adapte automatiquement à la charge et propose un kit Node.js prêt à l’emploi.
+Cette solution de stockage répond directement à l’exigence « Stockage et agrégation des données » : Firestore enregistre chaque lot brut sans schéma fixe et, dans le même temps, met à jour les compteurs agrégés d’un seul appel transactionnel, garantissant à la fois cohérence ACID et montée en charge automatique lorsque le nombre de réseaux ou de sniffeurs augmente.
 
 #### Authentification minimale : en-tête X-API-Key
-Le sniffeur n’a pas d’interface utilisateur ; un simple secret partagé dans l’en-tête suffit pour l’instant.
-Si, dans le futur, nous voulons un contrôle d’accès plus fin, nous pourrions migrer vers Firebase Auth ou JWT sans toucher au reste du code.
+Le sniffer n’a ni clavier ni interface graphique pour saisir un mot de passe. Nous avons donc placé un secret partagé dans le fichier de configuration ; chacune des requêtes vers /records porte ce secret dans l’en-tête X-API-Key. Le middleware Express se contente de comparer la valeur reçue à celle stockée dans les variables d’environnement. Dans le futur afin de passer à Firebase Auth ou à des jetons JWT : il suffira de remplacer ce middleware sans toucher au reste du code.
 
 #### Organisation interne (Services / Repositories)
-Le code du backend est découpé ainsi :
+Le projet sépare strictement les responsabilités :
 
- - Services (ImpactService, NotificationService…) : règles métier pures, faciles à tester.
+Controllers : points de contact HTTP. Ils valident les paramètres, appellent les services et renvoient la réponse.
+Services : règles métier purs (conversion octets→kWh, diffusion Socket.io…). 
+Repositories/models : code d’accès à Firestore. 
 
- - Repositories (networksRepo, networkLogRepo) : accès Firestore uniquement.
-
- - Controllers : point de contact HTTP qui oriente la requête, appelle les services puis répond.
-
-Cette séparation assure que l’on peut changer Firestore pour une autre base dans le futur sans réécrire la logique de calcul.
+Cette stratification rend le dépôt compréhensible pour un nouveau développeur : un bug d’API se cherchera côté controller, un ajustement d’algorithme côté service, un problème de base côté repository/model.
 
 #### Application mobile : Flutter 3
-Flutter compile en natif pour iOS et Android à partir d’un seul code Dart.
-Le hot-reload visuel est précieux : on voit immédiatement le rendu des jauges.
-Le package socket_io_client se connecte en une ligne au backend.
+
+Plutôt que de maintenir deux projets natifs (Kotlin pour Android, Swift pour iOS) – solution exigeante en temps et en expertise – nous avons choisi Flutter. Le framework compile en code natif pour les deux plates-formes à partir d’un unique projet Dart, et son hot reload permet de visualiser instantanément la moindre modification de l’interface. Le package socket_io_client se connecte naturellement au backend, ce qui simplifie la réception des mises à jour du thermomètre.
 
 #### Sniffer PC : Python 3 + Scapy
 Scapy est la référence open-source pour capturer et analyser les paquets réseau.
 En quelques dizaines de lignes on filtre, on catégorise (YouTube, Spotify…), puis on envoie un JSON au backend via la librairie requests.
 
 #### Composante ESP32
-L’ESP32 n'est pas couteux et possède Wi-Fi + Bluetooth sur la même puce contrairement a la Arduino uno .
-3
+Pour matérialiser visuellement l’impact énergétique, nous avons retenu un ESP32 équipé de LED : il communique avec l'API du backend et le microcontrôleur change instantanément la couleur de la LED (vert → jaune → orange → rouge) d’après le niveau reçu. Ce choix s’est imposé face à l’Arduino Uno envisagé au départ : contrairement à l’Uno, l’ESP32 embarque nativement le Wi-Fi et le Bluetooth LE, ce qui évite l’ajout d’un shield réseau coûteux et encombrant. Avec l'ESP32 nous obtenons un module compact, autonome et programmable depuis l’IDE Arduino, capable de se connecter directement à l’API et d’afficher en temps réel l’état “carbone” du réseau sans qu’aucune configuration supplémentaire ne soit nécessaire.
 
 ## Modèles et diagrammes
 ### Diagramme de la base de donnée

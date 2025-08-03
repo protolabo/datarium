@@ -10,19 +10,20 @@ from domain import is_tiktok_domain, is_chatgpt, is_efootball_konami, is_netflix
 from network import get_wifi_name, get_my_ip, get_my_hostname, get_interface
 
 # dictionnaire pour stocker les tailles des services puis agrégées toutes les 4 secondes
-aggregate_servvice = {
-    "Tiktok": 0,
-    "Spotify": 0,
-    "ChatGPT": 0,
-    "Youtube": 0,
-    "Netflix": 0,
-    "Efootball": 0,
-    "Unknown": 0
-}
+services_by_hosts= {}
 
-host_ID_dic = {
-    "hostID": ""
-}
+def add_host(hostID):
+    if hostID not in services_by_hosts:
+        services_by_hosts[hostID] = {
+            "Tiktok": 0,
+            "Spotify": 0,
+            "ChatGPT": 0,
+            "Youtube": 0,
+            "Netflix": 0,
+            "Efootball": 0,
+            "Unknown": 0
+        }
+
 
 name_wifi = get_wifi_name()
 my_ip = get_my_ip() # l'ip local
@@ -78,11 +79,14 @@ def paquet(packet):
         name_destination = dns_cahe[dst]
 
         if ipaddress.ip_address(src).is_private and name_source != "Unknown":
-            host_ID_dic["hostID"] = name_source
+            add_host(name_source)
+            hostn = name_source
         elif ipaddress.ip_address(dst).is_private and name_destination != "Unknown":
-            host_ID_dic["hostID"] = name_destination
+            add_host(name_destination)
+            hostn = name_destination
         else:
-            host_ID_dic["hostID"] = "Unknown"
+            add_host("Unknown")
+            hostn = "Unknown"
         
 
         if not ipaddress.ip_address(src).is_private and name_source != "Unknown":
@@ -95,20 +99,22 @@ def paquet(packet):
 
         size = len(packet)
 
-        if is_tiktok_domain(domain_name):
-            aggregate_servvice["Tiktok"] += size 
-        elif is_spotify(domain_name): 
-            aggregate_servvice["Spotify"] += size
-        elif is_chatgpt(domain_name): 
-            aggregate_servvice["ChatGPT"] += size
-        elif is_youtube(domain_name):
-            aggregate_servvice["Youtube"] += size
-        elif is_netflix(domain_name):
-            aggregate_servvice["Netflix"] += size
-        elif is_efootball_konami(domain_name):
-            aggregate_servvice["Efootball"] += size  
-        else:
-            aggregate_servvice["Unknown"] += size
+        for host in services_by_hosts:
+            if host == hostn:
+                if is_tiktok_domain(domain_name):
+                    services_by_hosts[host]["Tiktok"] += size 
+                elif is_spotify(domain_name): 
+                    services_by_hosts[host]["Spotify"] += size
+                elif is_chatgpt(domain_name): 
+                    services_by_hosts[host]["ChatGPT"] += size
+                elif is_youtube(domain_name):
+                    services_by_hosts[host]["Youtube"] += size
+                elif is_netflix(domain_name):
+                    services_by_hosts[host]["Netflix"] += size
+                elif is_efootball_konami(domain_name):
+                    services_by_hosts[host]["Efootball"] += size  
+                else:
+                    services_by_hosts[host]["Unknown"] += size
             
 def send_services_to_backend(service, size, time, hostID):
     
@@ -149,13 +155,12 @@ sniffer = AsyncSniffer(iface=interface, filter="(tcp or udp)", prn=paquet, promi
 sniffer.start()
 while True:
     try:
-        for service, size in aggregate_servvice.items():
-            if size > 1500:       # je mets ce seuil pour ne pas envoyer des données inutiles
-                send_services_to_backend(service, size, 4, host_ID_dic["hostID"])
-
-        for service in aggregate_servvice:       # on remet a 0 les valeurs pour le prochain envoi
-            aggregate_servvice[service] = 0
-
+        for host in list(services_by_hosts.keys()):
+            for service, size in services_by_hosts[host].items():
+                if size > 1500:
+                    send_services_to_backend(service, size, 4, host)
+            for service in services_by_hosts[host]:       # on remet a 0 les valeurs pour le prochain envoi
+                services_by_hosts[host][service] = 0
         time.sleep(4) # envoyer les données a l'esp32 toutes les 4 secondes
         
     except KeyboardInterrupt:

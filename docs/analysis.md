@@ -15,9 +15,19 @@ Avec la montée en puissance des services numériques (streaming, réseaux socia
 Exigences fonctionnelles :
 
 1. Le dispositif doit détecter automatiquement ou permettre à l’utilisateur de sélectionner un service numérique utilisé (YouTube, Netflix, Gmail, etc.).
+<<<<<<< HEAD
 2. Il doit mesurer ou estimer la consommation de données associée au service utilisé.
 3. Il doit afficher visuellement l'impact de cette consommation sur un dispositif physique (LED, jauge, lumière).
 4. L'utilisateur doit pouvoir visualiser facilement l'impact en temps réel sur l'interface (application mobile + dispositif physique).
+=======
+
+2. Il doit mesurer ou estimer la consommation de données associée au service utilisé.
+
+3. Il doit afficher visuellement l'impact de cette consommation sur un dispositif physique (LED, jauge, lumière).
+
+4. L'utilisateur doit pouvoir visualiser facilement l'impact en temps réel sur l'interface (application mobile + dispositif physique).
+
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 5. Le système doit fonctionner sur Android (détection automatique) et iOS (mode manuel).
 
 6. L'utilisateur peut choisir la categorie ou service a mesurer 
@@ -25,6 +35,7 @@ Exigences fonctionnelles :
 Exigences non fonctionnelles :
 
 1. La solution doit être simple et intuitive à utiliser.
+<<<<<<< HEAD
 2. L'affichage de l'impact doit être clair (vert, jaune, rouge).
 3. Le dispositif doit être économe en énergie (Arduino Zero + Bluetooth).
 4. La latence entre la détection de l'impact et l'affichage doit être inférieure à 1 seconde.
@@ -37,6 +48,29 @@ Exigences non fonctionnelles :
 - NetGuard : Firewall qui permet de bloquer les connexions d’applications spécifiques, utilise aussi un VPN local.
 - TrackerControl : Montre les trackers et domaines que les applications contactent.
 - Wireshark / Pi-hole : Analyse fine du trafic sur réseau local (PC).
+=======
+
+2. L'affichage de l'impact doit être clair (vert, jaune, rouge).
+
+3. Le dispositif doit être économe en énergie.
+
+4. La latence entre la détection de l'impact et l'affichage doit être inférieure à 1 seconde.
+
+5. Le système doit être sécurisé (pas d’accès non autorisé aux données de l’utilisateur).
+
+
+
+## Recherche de solutions
+
+- GlassWire Mobile : Analyse la consommation de données par application et alerte en cas de pic. Utilise un VPN local.
+
+- NetGuard : Firewall qui permet de bloquer les connexions d’applications spécifiques, utilise aussi un VPN local.
+
+- TrackerControl : Montre les trackers et domaines que les applications contactent.
+
+- Wireshark / Pi-hole : Analyse fine du trafic sur réseau local (PC).
+
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 - AdGuard iOS : Utilise un VPN local pour analyser les domaines contactés par les applications.
 
 Comparaison avec Datarium :
@@ -46,8 +80,11 @@ Contrairement aux solutions existantes, Datarium vise à sensibiliser les utilis
 L’approche de Datarium est simplifiée (pas de VPN local, pas de contrôle réseau complet), mais met l'accent sur la compréhension et la sensibilisation.
 
 
+<<<<<<< HEAD
 ## Revue de littérature
 
+=======
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 
 ## Méthodologie
 

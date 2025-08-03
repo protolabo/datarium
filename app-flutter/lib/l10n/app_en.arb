@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "dashboardTitle": "Dashboard",
+  "headerTitle": "Live Activity",
+  "labelStreaming": "Streaming",
+  "labelCrypto": "Crypto Ex…",
+  "labelThroughput": "Throughput: {rate} oct/s",
+  "@labelThroughput": {
+    "description": "dataRate with one decimal"
+  },
+  "labelDuration": "Duration: {seconds}s",
+  "@labelDuration": {
+    "description": "duration in seconds"
+  },
+  "recentData": "Last 5 min: {recent} oct/s",
+  "@recentData": {
+    "description": "recentData with one decimal"
+  },
+  "energyRequests": "Energy-hungry requests",
+  "noFilterSelected": "No filters selected.",
+  "highUsage": "High usage",
+  "recommendations": "Recommendations"
+}

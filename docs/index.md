@@ -2,11 +2,20 @@
 
 > **Thèmes**: Systemes embarqués, Génie logiciel, Application mobile  
 > **Superviseur**: Louis-Edouard Lafontant  
+<<<<<<< HEAD
 
 <!-- ## Informations importantes -->
 
 <!-- !!! info "Dates importantes"
     - **Description du projet** : 23 mai 2025
+=======
+> **Collaborateurs:** Nom de(s) collaborateur(s) et partenaire(s)
+
+## Informations importantes
+
+<!-- !!! info "Dates importantes"
+    - **Description du projet** : 16 mai 2025
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
     - **Foire 1: Prototypage** : 9-13 juin 2025
     - **Foire 2: Version beta** : 14-18 juillet 2025
     - **Présentation et rapport** : 11-15 août 2025 -->
@@ -19,13 +28,18 @@
 
 ## Description du projet
 
+<<<<<<< HEAD
 Datarium est un projet visant à concevoir un dispositif interactif de visualisation de l'empreinte numerique appelé thermometre de données. 
+=======
+&nbsp;&nbsp;&nbsp;&nbsp;Datarium est un projet visant à concevoir un dispositif interactif de visualisation de l'empreinte numerique appelé thermometre de données. 
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 
 Ce dispositif reposera sur une carte Arduino zero , qui sera le coeur du systeme, permettant de collecter , traiter et afiicher les données en temps réel.
 
 Le Thermometre de données offrira une interface visuelle de l'empreinte numérique produite par l'utilisateur ou un système , que ce soit par des indicateurs graphiques (Écran, LED, Jauge) ou par des effets physiques (Mouvement, Lumiere, Son).
 Grâce à la polyvaleve de l'Arduino Zero, le dispositif pourr intégrer divers capteurs , modiles de communication et dispositifs de sortie pour fournir une visualisation  intercative.
 
+<<<<<<< HEAD
 L'objectif de Datarium est de: 
 
 1. Développer un dispositif interactif permettant la visualisation en temps réel de l’impact environnemental d’actions numériques.
@@ -33,6 +47,9 @@ L'objectif de Datarium est de:
 3. Connecter ce dispositif à une application mobile, pour enrichir l’expérience utilisateur et le suivi de l’impact.
 4. Sensibiliser les utilisateurs à leur empreinte environnementale numérique de manière concrète et intuitive.
 5. Encourager des comportements numériques plus responsables, en rendant l’impact visible et immédiat.
+=======
+L'objectif de Datarium est de sensibiliser les utilisateurs sur leur consommation numérique et de promouvoir des comportements plus responsables face aux ressources informatiques. En rendant l'empreinte numérique visible de manière tangible, ce projet vise à renforcer le comprehention des utilisateurs quant à leur utilisation des ressources numériques et à les inciter à adopter des pratiques plus durables.
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
    
 
 ### Contexte
@@ -104,10 +121,18 @@ Cette approche favorise l’appropriation individuelle des enjeux de durabilité
 | Prototype 2                    | 30 mai        | Prototype finale + Flux             | ✅ Terminé    |
 | Architecture                   | 30 mai        | Diagramme UML ou modèle C4          | ✅ Terminé   |
 | Modèle de donneés              | 6 juin        | Diagramme UML ou entité-association | ✅ Terminé   |
+<<<<<<< HEAD
 | Revue de conception            | 6 juin        | Feedback encadrant + ajustements    | 🔄 En cours  |
 | Implémentation v1              | 20 juin       | Application v1                      | ⏳ À venir  |
 | Implémentation v2 + tests      | 11 juillet    | Application v2 + Tests              | ⏳ À venir  |
 | Implémentation v3              | 1er août      | Version finale                      | ⏳ À venir  |
 | Tests                          | 11-31 juillet | Plan + Résultats intermédiaires     | ⏳ À venir  |
+=======
+| Revue de conception            | 6 juin        | Feedback encadrant + ajustements    | ✅ Terminé |
+| Implémentation v1              | 20 juin       | Application v1                      | ✅ Terminé  |
+| Implémentation v2 + tests      | 11 juillet    | Application v2 + Tests              | 🔄 En cours  |
+| Implémentation v3              | 1er août      | Version finale                      | 🔄 En cours|
+| Tests                          | 11-31 juillet | Plan + Résultats intermédiaires     | 🔄 En cours  |
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 | Évaluation finale              | 8 août        | Analyse des résultats + Discussion  | ⏳ À venir  |
 | Présentation + Rapport         | 15 août       | Présentation + Rapport              | ⏳ À venir  |

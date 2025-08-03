@@ -29,4 +29,20 @@ export class NetworkLogRepo {
     const snap = await q.limit(limit).get();
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
+<<<<<<< HEAD
+=======
+
+  /**
+   * Retourne les N derniers lots toutes catégories / réseaux confondus.
+   * @param {number} limit  nombre de documents (défaut : 1)
+   * @returns {Array<Object>} tableau de logs triés du + récent au + ancien
+   */
+  static async fetchLatest(limit = 1) {
+    const snap = await db.collection('networkLogs')
+                         .orderBy('timestamp', 'desc')
+                         .limit(limit)
+                         .get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 }

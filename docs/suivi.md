@@ -2,11 +2,21 @@
 
 ## Semaine 1
 
+<<<<<<< HEAD
 ??? note "Faire l'introduction du projet"
     - [x] Faire la description du projet (par Reine)
         - [x] Écrire le contexte
         - [x] Écrire la problematique ou les motivations
         - [x] Écrire les propositions et objectifs
+=======
+??? note "Mettre en place l'environnement"
+
+??? note "Faire l'introduction du projet"
+    - [x] Faire la description du projet (par Reine)
+    - [x] Ecrire le contexte
+    - [x] Ecrire la problematique ou les motivations
+    - [x] Ecrire les propositions et objectifs
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
        
 
 !!! info "Notes"
@@ -66,8 +76,13 @@
      - [x] Pensez à répéter chaque test plusieurs fois pour obtenir une moyenne.
 
 ## Semaine 5
+<<<<<<< HEAD
     - [x] Faire la correction du prototype 2 sur Figma 
     - [x] Faire le modele C4 
+=======
+ - [x] Faire la correction du prototype 2 sur Figma 
+ - [x] Faire le modele C4 
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 
 ## Semaine 6
 - [x] Commencer le front end de l'application avec flutter
@@ -111,6 +126,7 @@
 
 ## Semaine 9
 
+<<<<<<< HEAD
 - [] Codage de l'application avec flutter
 - [] Revision de la structure du backend et base de donne
 - [] Test du sniffer
@@ -120,4 +136,39 @@
 
 ## Semaine 12
 
+=======
+- [x] Codage de l'application avec flutter
+- [x] Revision de la structure du backend et base de donne
+- [x] Test du sniffer
+
+## Semaine 10
+
+- [x] Codage de l'application avec flutter
+- [x] Connexion de l'api au sniffer
+- [x] Set up de la carte ESP32
+- [x] Codage de l'ESP32
+- [x] test du sniffer avec l'api
+
+
+## Semaine 11
+
+- [x] Codage de l'application avec flutter
+- [x] test 3 du sniffer avec l'api
+- [x] ajout du diagramme de la base de donnee et de l'api
+- [x] Mis a jour de la page conception
+- [] Ajout du pdf sur la synthese des article dans la page etude preliminaire
+
+
+!!! info "Notes"
+    - Nous avons enlever le filtre du sniffer qui ne receuillait que le traffic du pc.
+
+
+## Semaine 12
+
+- [] Ecriture du rapport
+- [] Preparation d ela presentation du projet
+
+
+
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 ## Semaine 13

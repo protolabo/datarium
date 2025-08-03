@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { validateBatch }          from '../validators/ingestValidator.js';
+=======
+import { validateBatch }          from '../validators/recordsValidator.js';
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 import { ImpactService }          from '../services/impactService.js';
 import { UsageService }           from '../services/usageService.js';
 import { NotificationService }    from '../services/notificationService.js';

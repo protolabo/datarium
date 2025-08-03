@@ -62,8 +62,12 @@ src/
 |---------|-----------------|
 | **`indexRoute.js`** | Monte tous les sous‑routeurs |
 | **`usageRoute.js`** | `POST /ingest` |
+<<<<<<< HEAD
 | **`networkRoute.js`** | `GET /networks`, `GET /networks/:id` |
 | **`networkLogRoute.js`** | `GET /networkLogs` (query : `networkId`, `serviceName`, `from`, `to`, `limit`) |
+=======
+| **`networkRoute.js`** | `GET /networks`, `GET /networks/:id`, et 'GET /networkLog' |
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 | **`serviceRoute.js`** | `GET /services`, `GET /services/:name` |
 
 ---
@@ -92,7 +96,11 @@ src/
 
 | Fichier | But |
 |---------|-----|
+<<<<<<< HEAD
 | **`ingestValidator.js`** | Vérifie la structure d’un lot `/ingest` (ssid, service, bytes :number, etc.) → retourne `{ valid, errors[] }` |
+=======
+| **`recordsValidator.js`** | Vérifie la structure d’un lot `/ingest` (ssid, service, bytes :number, etc.) → retourne `{ valid, errors[] }` |
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 
 ---
 
@@ -157,7 +165,11 @@ et ajoute‑le au .gitignore.
 
 Endpoints
     Méthode	URL	Description	Auth
+<<<<<<< HEAD
     POST	/ingest	Envoie un ou plusieurs lots de trafic	Header X-API-Key
+=======
+    POST	/records	Envoie un ou plusieurs lots de trafic	Header X-API-Key
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
     GET	/networks	Liste tous les réseaux (tri DESC par lastBatchReceived)	—
     GET	/networks/:id	Détails d’un réseau	—
     GET	/networkLogs?networkId=&limit=&from=&to=&serviceName=	Recherche dans le journal plat	—
@@ -174,7 +186,11 @@ $body = @'
     "category":"video","bytes":524288,"windowSec":5  }
 ]
 '@
+<<<<<<< HEAD
 Invoke-RestMethod -Method Post -Uri "http://localhost:8000/ingest" `
+=======
+Invoke-RestMethod -Method Post -Uri "http://localhost:8000/records" `
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
                   -Headers $headers -Body $body
 
 

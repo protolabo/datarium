@@ -1,0 +1,50 @@
+import 'package:datarium/screens/dashboard/dashboard_screen.dart';
+import 'package:datarium/screens/history/history_screen.dart';
+import 'package:datarium/screens/profil/profile_screen.dart';
+import 'package:flutter/material.dart';
+
+class MainScaffold extends StatefulWidget {
+  const MainScaffold({super.key});
+
+  @override
+  State<MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends State<MainScaffold> {
+  int _selectedIndex = 2;
+
+  final List<Widget> _screens = [
+    const DashboardScreen(),
+    const ProfileScreen(),
+    const Center(child: Text('Datarium')),
+    const HistoryScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey[300],
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.green,
+        currentIndex: _selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.memory), label: 'Datarium'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.access_time),
+            label: 'Historique',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+        ],
+      ),
+    );
+  }
+}

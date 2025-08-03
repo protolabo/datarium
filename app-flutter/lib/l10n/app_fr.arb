@@ -1,0 +1,14 @@
+{
+  "@@locale": "fr",
+  "dashboardTitle": "Tableau de bord",
+  "headerTitle": "Activité en direct",
+  "labelStreaming": "Streaming",
+  "labelCrypto": "Crypto Ex…",
+  "labelThroughput": "Débit : {rate} oct/s",
+  "labelDuration": "Durée : {seconds}s",
+  "recentData": "Dernières 5 min : {recent} oct/s",
+  "energyRequests": "Requêtes énergivores",
+  "noFilterSelected": "Aucun filtre sélectionné.",
+  "highUsage": "Utilisation élevée",
+  "recommendations": "Recommandations"
+}

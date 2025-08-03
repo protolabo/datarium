@@ -63,8 +63,12 @@ Cette stratification rend le dépôt compréhensible pour un nouveau développeu
 Plutôt que de maintenir deux projets natifs (Kotlin pour Android, Swift pour iOS) – solution exigeante en temps et en expertise – nous avons choisi Flutter. Le framework compile en code natif pour les deux plates-formes à partir d’un unique projet Dart, et son hot reload permet de visualiser instantanément la moindre modification de l’interface. Le package socket_io_client se connecte naturellement au backend, ce qui simplifie la réception des mises à jour du thermomètre.
 
 #### Sniffer PC : Python 3 + Scapy
-Scapy est la référence open-source pour capturer et analyser les paquets réseau.
-En quelques dizaines de lignes on filtre, on catégorise (YouTube, Spotify…), puis on envoie un JSON au backend via la librairie requests.
+Nous faisons une capture du traffic grace a un framework python nommé Scapy. Cet outil permet d'intercepter le traffic sur un segment réseau et d'analyser les divers paquets recus et envoyés. Nous avons privilégié Scapy à d'autres outils comme PyShark pour plusieurs raisons :
+- Le nombre de paquets intercepté était beaucoup plus important avec scapy.
+- Scapy permet de faire une capture en asynchrone qui fournit des fonctions comme star et stop. Ceci permet de faire une capture tout en permettant de faire d'autres traitements dans le programme.
+Scapy est la référence open-source pour capturer et analyser les paquets réseau. 
+En quelques dizaines de lignes on filtre, on catégorise les paquets en fonction de leur provenance (YouTube, Spotify…), puis on envoie un JSON au backend via la librairie requests.
+Avec pyshark ca aurait été moins efficient a cause des traitements et communications avec le backend.
 
 #### Composante ESP32
 Pour matérialiser visuellement l’impact énergétique, nous avons retenu un ESP32 équipé de LED : il communique avec l'API du backend et le microcontrôleur change instantanément la couleur de la LED (vert → jaune → orange → rouge) d’après le niveau reçu. Ce choix s’est imposé face à l’Arduino Uno envisagé au départ : contrairement à l’Uno, l’ESP32 embarque nativement le Wi-Fi et le Bluetooth LE, ce qui évite l’ajout d’un shield réseau coûteux et encombrant. Avec l'ESP32 nous obtenons un module compact, autonome et programmable depuis l’IDE Arduino, capable de se connecter directement à l’API et d’afficher en temps réel l’état “carbone” du réseau sans qu’aucune configuration supplémentaire ne soit nécessaire.

@@ -19,8 +19,6 @@ export async function get (req, res, next) {
     res.json(net);
   } catch (e) { next(e); }
 }
-<<<<<<< HEAD
-=======
 
 /* GET /networkStatsEsp32 */
 export async function getEsp32Stats (req, res, next) {
@@ -39,4 +37,3 @@ try {
     });
   } catch (e) { next(e); }
 }
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0

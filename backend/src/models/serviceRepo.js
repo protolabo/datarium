@@ -23,8 +23,6 @@ export class ServiceRepo {
   static async remove(id) {
     await db.doc(`services/${id}`).delete();
   }
-<<<<<<< HEAD
-=======
 
   static async ajoutService({ id, name, category, description = '' }) {
   const ref  = db.doc(`services/${id}`);
@@ -38,5 +36,4 @@ export class ServiceRepo {
     }
   });
 }
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 }

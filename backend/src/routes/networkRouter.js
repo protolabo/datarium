@@ -1,17 +1,7 @@
-<<<<<<< HEAD
-// src/routes/networkRouter.js
-import { Router }                 from 'express';
-import * as netCtrl               from '../controllers/networkController.js';
-import * as logCtrl               from '../controllers/networkLogController.js';
 
-export default Router()
-  /* lecture */
-  .get   ('/networks',      netCtrl.list)
-  .get   ('/networks/:id',  netCtrl.get)
-  .get   ('/networkLogs',   logCtrl.searchLogs)
-  /* ingestion */
-  .post  ('/ingest',        logCtrl.recordUsageBatch);
-=======
+// src/routes/networkRouter.
+
+
 // Regroupe TOUTES les routes HTTP de l’API.
 import { Router }         from 'express';
 
@@ -36,4 +26,3 @@ router.get('/networkStatsEsp32',  netCtrl.getEsp32Stats)     // route pour recup
 router.post('/records',          logCtrl.recordUsageBatch);           // POST /records
 
 export default router;
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0

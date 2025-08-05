@@ -29,8 +29,6 @@ export class NetworkLogRepo {
     const snap = await q.limit(limit).get();
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
-<<<<<<< HEAD
-=======
 
   /**
    * Retourne les N derniers lots toutes catégories / réseaux confondus.
@@ -44,5 +42,4 @@ export class NetworkLogRepo {
                          .get();
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 }

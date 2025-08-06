@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/aissa/datarium/app-flutter/windows"
+    "cmake.sourceDirectory": "C:/Users/aissa/datarium/app-flutter/windows",
+    "cmake.ignoreCMakeListsMissing": true
 }

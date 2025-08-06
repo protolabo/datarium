@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> d1f1a5a (Ignore VSCode et dossier iOS dans Flutter)
 import { validateBatch }          from '../validators/recordsValidator.js';
 import { ImpactService }          from '../services/impactService.js';
 import { UsageService }           from '../services/usageService.js';

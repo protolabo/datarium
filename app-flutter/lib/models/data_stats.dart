@@ -1,11 +1,18 @@
 class DataStats {
+  /// Octets par seconde
   final double dataRate;
+
+  /// Durée totale d’écoute (en secondes)
   final int duration;
+
+  /// Total d’octets reçus
   final double recentData;
-  final double miningConsumption; // TODO: Refactor into ConsumptionModel
-  final double streamingConsumption; // TODO: Refactor into ConsumptionModel
-  final double gamingConsumption; // TODO: Refactor into ConsumptionModel
-  final double aiConsumption; // TODO: Refactor into ConsumptionModel
+
+  /// Champs de consommation pour plus tard – provisoirement à 0
+  final double miningConsumption;
+  final double streamingConsumption;
+  final double gamingConsumption;
+  final double aiConsumption;
 
   DataStats({
     required this.dataRate,
@@ -17,21 +24,26 @@ class DataStats {
     required this.aiConsumption,
   });
 
+  factory DataStats.fromJson(Map<String, dynamic> json) {
+    final bytes = (json['bytes'] as num).toDouble();
+    final secs  = json['listenSec'] as int;
+
+    return DataStats(
+      dataRate: bytes / secs,    // calculé à partir de bytes / listenSec
+      duration: secs,            // listenSec
+      recentData: bytes,         // total bytes
+      // Consommations détaillées non encore supportées par l'API
+      miningConsumption: 0,
+      streamingConsumption: 0,
+      gamingConsumption: 0,
+      aiConsumption: 0,
+    );
+  }
+
+  /// Somme des consommations (pour usage futur)
   double get totalConsumption =>
       miningConsumption +
       streamingConsumption +
       gamingConsumption +
       aiConsumption;
-
-  factory DataStats.fromJson(Map<String, dynamic> json) {
-    return DataStats(
-      dataRate: (json['dataRate'] as num).toDouble(),
-      duration: json['duration'] as int,
-      recentData: (json['recentData'] as num).toDouble(),
-      miningConsumption: (json['miningConsumption'] as num).toDouble(),
-      streamingConsumption: (json['streamingConsumption'] as num).toDouble(),
-      gamingConsumption: (json['gamingConsumption'] as num).toDouble(),
-      aiConsumption: (json['aiConsumption'] as num).toDouble(),
-    );
-  }
 }

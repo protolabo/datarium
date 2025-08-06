@@ -8,4 +8,3 @@ const router= Router();
   router.get  ('/services/:id',    svcCtrl.get)
   router.delete('/services/:id',   svcCtrl.remove);
 export default router;
-

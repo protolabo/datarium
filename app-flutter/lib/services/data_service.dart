@@ -1,27 +1,31 @@
 import 'dart:convert';
-import 'dart:io';
+
+import 'package:flutter/foundation.dart';        // pour kIsWeb et defaultTargetPlatform
 import 'package:http/http.dart' as http;
-import '../models/data_stats.dart';
+import 'package:datarium/models/data_stats.dart';
 
 class DataService {
   final String baseUrl;
   final http.Client _client;
 
   DataService({String? baseUrl, http.Client? client})
-    : baseUrl =
-          baseUrl ??
-          (Platform.isAndroid
-              ? 'http://10.0.2.2:8000'
-              : 'http://localhost:8000'),
-      _client = client ?? http.Client();
+      : baseUrl = baseUrl ??
+            (kIsWeb
+                ? 'http://localhost:8000'
+                : (defaultTargetPlatform == TargetPlatform.android
+                    ? 'http://10.0.2.2:8000'
+                    : 'http://localhost:8000')),
+        _client = client ?? http.Client();
 
-  Future<DataStats> fetchDataStats() async {
-    final uri = Uri.parse('$baseUrl/stats');
+  /// Récupère les stats temps réel pour le réseau [networkId].
+  Future<DataStats> fetchDataStats(String networkId) async {
+    final uri = Uri.parse('$baseUrl/networkStatsEsp32?networkId=$networkId');
     final response = await _client.get(uri);
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonBody = json.decode(response.body);
-      return DataStats.fromJson(jsonBody);
+      // Décodage JSON + mapping sur DataStats
+      final Map<String, dynamic> body = json.decode(response.body);
+      return DataStats.fromJson(body);
     } else {
       throw HttpException(
         'Failed to load stats (status ${response.statusCode})',
@@ -29,11 +33,10 @@ class DataService {
     }
   }
 
-  void dispose() {
-    _client.close();
-  }
+  void dispose() => _client.close();
 }
 
+/// Exception HTTP personnalisée
 class HttpException implements Exception {
   final String message;
   HttpException(this.message);

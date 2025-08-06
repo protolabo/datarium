@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* ---------- IMPORTS (racine) ------------------------- */
+=======
+
+>>>>>>> d1f1a5a (Ignore VSCode et dossier iOS dans Flutter)
 import { validateBatch }   from '../validators/recordsValidator.js';
 import { ImpactService }   from '../services/impactService.js';
 import { NetworkRepo }     from '../models/networksRepo.js';
@@ -56,9 +60,9 @@ export async function searchLogs (req, res, next) {
     const logs = await NetworkLogRepo.search({
       networkId,
       serviceName,
-      fromTs: from ? +from : undefined,
-      toTs  : to   ? +to   : undefined,
-      limit : +limit || 100
+      fromTs : from ? +from : undefined,
+      toTs   : to   ? +to   : undefined,
+      limit  : +limit || 100         // défaut 100
     });
     res.json(logs);
   } catch (e) { next(e); }

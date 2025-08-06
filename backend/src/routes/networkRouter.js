@@ -1,7 +1,3 @@
-
-// src/routes/networkRouter.
-
-
 // Regroupe TOUTES les routes HTTP de l’API.
 import { Router }         from 'express';
 

@@ -7,4 +7,3 @@ const router = Router();
  router .use(networkRouter)
  router.use(serviceRouter);
 export default router;
-

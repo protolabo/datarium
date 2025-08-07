@@ -22,18 +22,29 @@ export async function get (req, res, next) {
 
 /* GET /networkStatsEsp32 */
 export async function getEsp32Stats (req, res, next) {
-try {
+  try {
     const stat_General = await repo.listAll();
+
+    let NetworkOfUser;
+
     if (!stat_General) return res.status(404).json({ error: 'No networks found' });
-    let TotalBytes = 0;
-    let TotalListenSec = 0;
+
     for (const network of stat_General){
-      TotalBytes += network.bytes || 0;
-      TotalListenSec += network.listenSec || 0;
+      if (network && (network.id).trim().toLowerCase() === req.params.id.trim().toLowerCase()){
+        NetworkOfUser = network;
+      }
     }
+
+    if (!NetworkOfUser) return res.status(404).json({ error: 'No network found' });
+
     res.json({
-      bytes: TotalBytes,
-      listenSec: TotalListenSec
+      bytes: NetworkOfUser.bytes || 0,
+      listenSec: NetworkOfUser.listenSec || 0
     });
-  } catch (e) { next(e); }
+
+  } catch (e) {
+    console.error("Erreur dans getEsp32Stats:", e);
+    res.status(500).json({ error: "Server error", details: e.message });
+  }
 }
+

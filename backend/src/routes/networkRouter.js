@@ -15,7 +15,7 @@ router.get('/networks/:id',      netCtrl.get);         // GET  /networks/Home
 router.get('/networkLogs',                   logCtrl.searchLogs);      // ?networkId=&limit=
 router.get('/networkLogs/latest',logCtrl.getLastLog);      // dernier log global
 router.get('/networkLogs/recent',logCtrl.getRecentLogs);     // 10 derniers d’un réseau
-router.get('/networkStatsEsp32',  netCtrl.getEsp32Stats)     // route pour recuperer les stats pour l'esp32
+router.get('/networkStatsEsp32/:id',  netCtrl.getEsp32Stats)    // route pour recuperer les stats pour l'esp32
 
 
 /* ---------- Records ---- */

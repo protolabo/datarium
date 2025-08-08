@@ -122,13 +122,13 @@ def send_services_to_backend(service, size, time, hostID):
         hostID = "non identifié"
     try:
         categories = {
-            "Tiktok": "video",
-            "Spotify": "music",
-            "ChatGPT": "ai",
-            "Youtube": "video",
-            "Netflix": "video",
-            "Efootball": "game",
-            "Unknown": "unknown"
+            "Tiktok": "Streaming",
+            "Spotify": "Streaming",
+            "ChatGPT": "AI/LLM",
+            "Youtube": "Streaming",
+            "Netflix": "Streaming",
+            "Efootball": "Gaming",
+            "Unknown": "Unknown"
         }
 
         data = {

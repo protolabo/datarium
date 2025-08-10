@@ -2,13 +2,24 @@
   "@@locale": "fr",
   "dashboardTitle": "Tableau de bord",
   "headerTitle": "Activité en direct",
-  "labelStreaming": "Streaming",
-  "labelCrypto": "Crypto Ex…",
+  "recommendations": "Recommandations",
+
   "labelThroughput": "Débit : {rate} oct/s",
+  "@labelThroughput": { "placeholders": { "rate": { "type": "num" } } },
+
   "labelDuration": "Durée : {seconds}s",
-  "recentData": "Dernières 5 min : {recent} oct/s",
+  "@labelDuration": { "placeholders": { "seconds": { "type": "num" } } },
+
+  "recentData": "Dernières 5 min : {recent} oct",
+  "@recentData": { "placeholders": { "recent": { "type": "num" } } },
+
+  "networkLabel": "Réseau : {id}",
+  "@networkLabel": { "placeholders": { "id": { "type": "String" } } },
+
+  "usageLow": "Utilisation faible",
+  "usageMedium": "Utilisation modérée",
+  "usageHigh": "Utilisation élevée",
+
   "energyRequests": "Requêtes énergivores",
-  "noFilterSelected": "Aucun filtre sélectionné.",
-  "highUsage": "Utilisation élevée",
-  "recommendations": "Recommandations"
+  "noFilterSelected": "Aucun filtre sélectionné."
 }

@@ -15,35 +15,40 @@ class AppLocalizationsFr extends AppLocalizations {
   String get headerTitle => 'Activité en direct';
 
   @override
-  String get labelStreaming => 'Streaming';
+  String get recommendations => 'Recommandations';
 
   @override
-  String get labelCrypto => 'Crypto Ex…';
-
-  @override
-  String labelThroughput(Object rate) {
+  String labelThroughput(num rate) {
     return 'Débit : $rate oct/s';
   }
 
   @override
-  String labelDuration(Object seconds) {
+  String labelDuration(num seconds) {
     return 'Durée : ${seconds}s';
   }
 
   @override
-  String recentData(Object recent) {
-    return 'Dernières 5 min : $recent oct/s';
+  String recentData(num recent) {
+    return 'Dernières 5 min : $recent oct';
   }
+
+  @override
+  String networkLabel(String id) {
+    return 'Réseau : $id';
+  }
+
+  @override
+  String get usageLow => 'Utilisation faible';
+
+  @override
+  String get usageMedium => 'Utilisation modérée';
+
+  @override
+  String get usageHigh => 'Utilisation élevée';
 
   @override
   String get energyRequests => 'Requêtes énergivores';
 
   @override
   String get noFilterSelected => 'Aucun filtre sélectionné.';
-
-  @override
-  String get highUsage => 'Utilisation élevée';
-
-  @override
-  String get recommendations => 'Recommandations';
 }

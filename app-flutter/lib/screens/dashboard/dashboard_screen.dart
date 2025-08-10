@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/filter_option.dart';
-import '../filters_provider.dart';
-import '../../services/data_service.dart';
+
+import 'package:datarium/l10n/app_localizations.dart';
+import 'package:datarium/models/filter_option.dart';
+import 'package:datarium/screens/filters_provider.dart';
+import 'package:datarium/services/data_service.dart';
+
 import 'dashboard_viewmodel.dart';
 import 'widgets/consumption_bar.dart';
 import 'widgets/main_content.dart';
-import '../../l10n/app_localizations.dart';
 
 class DashboardScreen extends StatelessWidget {
   final String networkId;
-
   const DashboardScreen({Key? key, required this.networkId}) : super(key: key);
 
   @override
@@ -25,10 +26,12 @@ class DashboardScreen extends StatelessWidget {
       },
       child: Consumer<DashboardViewModel>(
         builder: (context, vm, _) {
-          final filtersProvider = context.watch<FiltersProvider>();
-          final activeFilters = filtersProvider.asFilterOptions();
+          // ✅ on récupère des FilterOption, pas des String
+          final List<FilterOption> activeFilters =
+              context.watch<FiltersProvider>().asFilterOptions();
+
           final totalCons = vm.calculateTotalConsumption(activeFilters);
-          final barHeight = totalCons > 20 ? 150.0 : (totalCons / 20) * 150;
+          final barHeight = totalCons > 20 ? 150.0 : (totalCons / 20) * 150.0;
 
           return Scaffold(
             backgroundColor: Colors.white,
@@ -58,12 +61,8 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
               actions: [
-                
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Text(
                     '${vm.recommendationCount}',
                     style: const TextStyle(
@@ -79,12 +78,8 @@ class DashboardScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Text(
                       'Activité en direct',
                       style: TextStyle(
@@ -95,14 +90,11 @@ class DashboardScreen extends StatelessWidget {
                     ),
                   ),
 
-                  
+                  // Débit (oct/s) & durée (s)
                   Container(
                     width: double.infinity,
                     color: Colors.green[100],
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -115,10 +107,28 @@ class DashboardScreen extends StatelessWidget {
                     ),
                   ),
 
+                  // ✅ Unique bandeau "Dernières 5 min" (unité correcte : oct)
+                  Container(
+                    width: double.infinity,
+                    color: Colors.green[400],
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Text(
+                      'Dernières 5 min : ${vm.recentData.toStringAsFixed(0)} oct',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+
                   const SizedBox(height: 16),
+
+                  // Jauge verticale
                   ConsumptionBar(recentData: vm.recentData),
+
+                  // Cartes + recommandations
                   MainContent(
-                    filters: activeFilters,
+                    filters: activeFilters, // <- List<FilterOption>
                     categoryConsumption: vm.categoryConsumption,
                     recommendationCount: vm.recommendationCount,
                     barHeight: barHeight,

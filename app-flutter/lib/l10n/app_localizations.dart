@@ -107,62 +107,68 @@ abstract class AppLocalizations {
   /// No description provided for @headerTitle.
   ///
   /// In en, this message translates to:
-  /// **'Live Activity'**
+  /// **'Live activity'**
   String get headerTitle;
-
-  /// No description provided for @labelStreaming.
-  ///
-  /// In en, this message translates to:
-  /// **'Streaming'**
-  String get labelStreaming;
-
-  /// No description provided for @labelCrypto.
-  ///
-  /// In en, this message translates to:
-  /// **'Crypto Ex…'**
-  String get labelCrypto;
-
-  /// dataRate with one decimal
-  ///
-  /// In en, this message translates to:
-  /// **'Throughput: {rate} oct/s'**
-  String labelThroughput(Object rate);
-
-  /// duration in seconds
-  ///
-  /// In en, this message translates to:
-  /// **'Duration: {seconds}s'**
-  String labelDuration(Object seconds);
-
-  /// recentData with one decimal
-  ///
-  /// In en, this message translates to:
-  /// **'Last 5 min: {recent} oct/s'**
-  String recentData(Object recent);
-
-  /// No description provided for @energyRequests.
-  ///
-  /// In en, this message translates to:
-  /// **'Energy-hungry requests'**
-  String get energyRequests;
-
-  /// No description provided for @noFilterSelected.
-  ///
-  /// In en, this message translates to:
-  /// **'No filters selected.'**
-  String get noFilterSelected;
-
-  /// No description provided for @highUsage.
-  ///
-  /// In en, this message translates to:
-  /// **'High usage'**
-  String get highUsage;
 
   /// No description provided for @recommendations.
   ///
   /// In en, this message translates to:
   /// **'Recommendations'**
   String get recommendations;
+
+  /// No description provided for @labelThroughput.
+  ///
+  /// In en, this message translates to:
+  /// **'Throughput: {rate} B/s'**
+  String labelThroughput(num rate);
+
+  /// No description provided for @labelDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: {seconds}s'**
+  String labelDuration(num seconds);
+
+  /// No description provided for @recentData.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 5 min: {recent} B/s'**
+  String recentData(num recent);
+
+  /// No description provided for @networkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Network: {id}'**
+  String networkLabel(String id);
+
+  /// No description provided for @usageLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low usage'**
+  String get usageLow;
+
+  /// No description provided for @usageMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate usage'**
+  String get usageMedium;
+
+  /// No description provided for @usageHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High usage'**
+  String get usageHigh;
+
+  /// No description provided for @energyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Power-hungry requests'**
+  String get energyRequests;
+
+  /// No description provided for @noFilterSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No filter selected.'**
+  String get noFilterSelected;
 }
 
 class _AppLocalizationsDelegate

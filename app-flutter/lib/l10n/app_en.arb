@@ -1,23 +1,25 @@
 {
   "@@locale": "en",
   "dashboardTitle": "Dashboard",
-  "headerTitle": "Live Activity",
-  "labelStreaming": "Streaming",
-  "labelCrypto": "Crypto Ex…",
-  "labelThroughput": "Throughput: {rate} oct/s",
-  "@labelThroughput": {
-    "description": "dataRate with one decimal"
-  },
+  "headerTitle": "Live activity",
+  "recommendations": "Recommendations",
+
+  "labelThroughput": "Throughput: {rate} B/s",
+  "@labelThroughput": { "placeholders": { "rate": { "type": "num" } } },
+
   "labelDuration": "Duration: {seconds}s",
-  "@labelDuration": {
-    "description": "duration in seconds"
-  },
-  "recentData": "Last 5 min: {recent} oct/s",
-  "@recentData": {
-    "description": "recentData with one decimal"
-  },
-  "energyRequests": "Energy-hungry requests",
-  "noFilterSelected": "No filters selected.",
-  "highUsage": "High usage",
-  "recommendations": "Recommendations"
+  "@labelDuration": { "placeholders": { "seconds": { "type": "num" } } },
+
+  "recentData": "Last 5 min: {recent} B/s",
+  "@recentData": { "placeholders": { "recent": { "type": "num" } } },
+
+  "networkLabel": "Network: {id}",
+  "@networkLabel": { "placeholders": { "id": { "type": "String" } } },
+
+  "usageLow": "Low usage",
+  "usageMedium": "Moderate usage",
+  "usageHigh": "High usage",
+
+  "energyRequests": "Power-hungry requests",
+  "noFilterSelected": "No filter selected."
 }

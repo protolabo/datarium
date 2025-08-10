@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+
+import '../../models/data_stats.dart';
 import '../../models/filter_option.dart';
 import '../../services/data_service.dart';
-import '../../models/data_stats.dart';
 
 class DashboardViewModel extends ChangeNotifier {
   final DataService _dataService;
@@ -15,13 +15,13 @@ class DashboardViewModel extends ChangeNotifier {
   int duration = 0;
   double recentData = 0;
 
-  Map<String, double> categoryConsumption = {
-    "Streaming": 0,
-    "Gaming": 0,
-    "AI/LLM": 0,
+  Map<String, double> categoryConsumption = const {
+    'Streaming': 0,
+    'Gaming': 0,
+    'AI/ LLM': 0,
+    'Unknown': 0,
   };
 
-  /// Nombre de catégories dont la conso est > 0
   int recommendationCount = 0;
 
   DashboardViewModel(this._dataService);
@@ -29,10 +29,11 @@ class DashboardViewModel extends ChangeNotifier {
   void init(String networkId) {
     _networkId = networkId;
     _fetchAndUpdateData();
-    _timer = Timer.periodic(
-      const Duration(seconds: 2),
-      (_) => _fetchAndUpdateData(),
-    );
+    _timer?.cancel();
+    // ralentir le polling pour éviter la pression côté backend
+    _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+      _fetchAndUpdateData();
+    });
   }
 
   @override
@@ -44,26 +45,28 @@ class DashboardViewModel extends ChangeNotifier {
 
   Future<void> _fetchAndUpdateData() async {
     if (_networkId == null) return;
-
     try {
-      final stats = await _dataService.fetchDataStats(_networkId!);
+      final DataStats stats = await _dataService.fetchLatestLog(_networkId!);
+
       dataRate = stats.dataRate;
       duration = stats.duration;
       recentData = stats.recentData;
+
       categoryConsumption = {
-        "Streaming": stats.streamingConsumption,
-        "Gaming":    stats.gamingConsumption,
-        "AI/LLM":    stats.aiConsumption,
+        'Streaming': stats.streamingConsumption,
+        'Gaming': stats.gamingConsumption,
+        'AI/ LLM': stats.aiConsumption,
+        'Unknown': stats.unknownConsumption,
       };
 
-      // recalcul auto du nombre de recommandations
-      recommendationCount = categoryConsumption.values
-          .where((v) => v > 0)
-          .length;
+      recommendationCount =
+          categoryConsumption.values.where((v) => v > 0).length;
 
       notifyListeners();
     } catch (e) {
-      debugPrint("Erreur lors du chargement des données : $e");
+      // en pratique DataService ne relance pas d’exception ici,
+      // mais on garde un catch silencieux.
+      debugPrint('DashboardViewModel: $e');
     }
   }
 

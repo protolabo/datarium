@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class EnergyTile extends StatelessWidget {
   final String name;
-  final double consumption;
+  final double consumption; // kWh
 
   const EnergyTile({
     Key? key,
@@ -12,6 +12,8 @@ class EnergyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final badge = _usageBadge(consumption); // null si 0 => rien à afficher
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
@@ -30,17 +32,38 @@ class EnergyTile extends StatelessWidget {
                 '${consumption.toStringAsFixed(2)} kWh',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              const Text(
-                'Utilisation élevée',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                ),
-              ),
+              if (badge != null) badge, // <= n’affiche rien si 0
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  /// Retourne un label coloré selon le niveau, ou null si conso = 0
+  Widget? _usageBadge(double kwh) {
+    if (kwh <= 0) return null;
+
+    late final Color color;
+    late final String text;
+
+    if (kwh < 0.2) {
+      color = Colors.green;
+      text = 'Utilisation faible';
+    } else if (kwh < 1.0) {
+      color = Colors.orange;
+      text = 'Utilisation modérée';
+    } else {
+      color = Colors.red;
+      text = 'Utilisation élevée';
+    }
+
+    return Text(
+      text,
+      style: TextStyle(
+        color: color,
+        fontWeight: FontWeight.bold,
+        fontSize: 12,
       ),
     );
   }

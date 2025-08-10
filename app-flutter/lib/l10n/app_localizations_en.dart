@@ -12,38 +12,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardTitle => 'Dashboard';
 
   @override
-  String get headerTitle => 'Live Activity';
+  String get headerTitle => 'Live activity';
 
   @override
-  String get labelStreaming => 'Streaming';
+  String get recommendations => 'Recommendations';
 
   @override
-  String get labelCrypto => 'Crypto Ex…';
-
-  @override
-  String labelThroughput(Object rate) {
-    return 'Throughput: $rate oct/s';
+  String labelThroughput(num rate) {
+    return 'Throughput: $rate B/s';
   }
 
   @override
-  String labelDuration(Object seconds) {
+  String labelDuration(num seconds) {
     return 'Duration: ${seconds}s';
   }
 
   @override
-  String recentData(Object recent) {
-    return 'Last 5 min: $recent oct/s';
+  String recentData(num recent) {
+    return 'Last 5 min: $recent B/s';
   }
 
   @override
-  String get energyRequests => 'Energy-hungry requests';
+  String networkLabel(String id) {
+    return 'Network: $id';
+  }
 
   @override
-  String get noFilterSelected => 'No filters selected.';
+  String get usageLow => 'Low usage';
 
   @override
-  String get highUsage => 'High usage';
+  String get usageMedium => 'Moderate usage';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get usageHigh => 'High usage';
+
+  @override
+  String get energyRequests => 'Power-hungry requests';
+
+  @override
+  String get noFilterSelected => 'No filter selected.';
 }

@@ -9,6 +9,7 @@ import 'package:datarium/services/data_service.dart';
 import 'dashboard_viewmodel.dart';
 import 'widgets/consumption_bar.dart';
 import 'widgets/main_content.dart';
+import 'widgets/dashboard_header.dart'; // <-- important
 
 class DashboardScreen extends StatelessWidget {
   final String networkId;
@@ -26,12 +27,12 @@ class DashboardScreen extends StatelessWidget {
       },
       child: Consumer<DashboardViewModel>(
         builder: (context, vm, _) {
-          // ✅ on récupère des FilterOption, pas des String
           final List<FilterOption> activeFilters =
               context.watch<FiltersProvider>().asFilterOptions();
 
           final totalCons = vm.calculateTotalConsumption(activeFilters);
-          final barHeight = totalCons > 20 ? 150.0 : (totalCons / 20) * 150.0;
+          final barHeight =
+              totalCons > 20 ? 150.0 : (totalCons / 20) * 150.0;
 
           return Scaffold(
             backgroundColor: Colors.white,
@@ -78,47 +79,11 @@ class DashboardScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Text(
-                      'Activité en direct',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-
-                  // Débit (oct/s) & durée (s)
-                  Container(
-                    width: double.infinity,
-                    color: Colors.green[100],
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Débit : ${vm.dataRate.toStringAsFixed(1)} oct/s',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('Durée : ${vm.duration}s'),
-                      ],
-                    ),
-                  ),
-
-                  // ✅ Unique bandeau "Dernières 5 min" (unité correcte : oct)
-                  Container(
-                    width: double.infinity,
-                    color: Colors.green[400],
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Text(
-                      'Dernières 5 min : ${vm.recentData.toStringAsFixed(0)} oct',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                  // 
+                  DashboardHeader(
+                    dataRate: vm.dataRate,
+                    duration: vm.duration,
+                    recentBytes: vm.recentData,
                   ),
 
                   const SizedBox(height: 16),
@@ -128,7 +93,7 @@ class DashboardScreen extends StatelessWidget {
 
                   // Cartes + recommandations
                   MainContent(
-                    filters: activeFilters, // <- List<FilterOption>
+                    filters: activeFilters,
                     categoryConsumption: vm.categoryConsumption,
                     recommendationCount: vm.recommendationCount,
                     barHeight: barHeight,

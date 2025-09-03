@@ -1,4 +1,3 @@
-
 // Lecture des agrégats réseau (collection networks)
 
 import { NetworkRepo } from '../models/networksRepo.js';
@@ -6,45 +5,45 @@ import { NetworkRepo } from '../models/networksRepo.js';
 const repo = new NetworkRepo();
 
 /* GET /networks */
-export async function list (req, res, next) {
-   try { res.json(await repo.listAll()); }
-  catch (e) { next(e); }
+export async function list(req, res, next) {
+    try { res.json(await repo.listAll()); }
+    catch (e) { next(e); }
 }
 
 /* GET /networks/:id */
-export async function get (req, res, next) {
-  try {
-    const net = await repo.getById(req.params.id);
-    if (!net) return res.status(404).json({ error: 'Network not found' });
-    res.json(net);
-  } catch (e) { next(e); }
+export async function get(req, res, next) {
+    try {
+        const net = await repo.getById(req.params.id);
+        if (!net) return res.status(404).json({ error: 'Network not found' });
+        res.json(net);
+    } catch (e) { next(e); }
 }
 
 /* GET /networkStatsEsp32 */
-export async function getEsp32Stats (req, res, next) {
-  try {
-    const stat_General = await repo.listAll();
+export async function getEsp32Stats(req, res, next) {
+    try {
+        const stat_General = await repo.listAll();
 
-    let NetworkOfUser;
+        let NetworkOfUser;
 
-    if (!stat_General) return res.status(404).json({ error: 'No networks found' });
+        if (!stat_General) return res.status(404).json({ error: 'No networks found' });
 
-    for (const network of stat_General){
-      if (network && (network.id).trim().toLowerCase() === req.params.id.trim().toLowerCase()){
-        NetworkOfUser = network;
-      }
+        for (const network of stat_General) {
+            if (network && (network.id).trim().toLowerCase() === req.params.id.trim().toLowerCase()) {
+                NetworkOfUser = network;
+            }
+        }
+
+        if (!NetworkOfUser) return res.status(404).json({ error: 'No network found' });
+
+        res.json({
+            bytes: NetworkOfUser.bytes || 0,
+            listenSec: NetworkOfUser.listenSec || 0
+        });
+
+    } catch (e) {
+        console.error("Erreur dans getEsp32Stats:", e);
+        res.status(500).json({ error: "Server error", details: e.message });
     }
-
-    if (!NetworkOfUser) return res.status(404).json({ error: 'No network found' });
-
-    res.json({
-      bytes: NetworkOfUser.bytes || 0,
-      listenSec: NetworkOfUser.listenSec || 0
-    });
-
-  } catch (e) {
-    console.error("Erreur dans getEsp32Stats:", e);
-    res.status(500).json({ error: "Server error", details: e.message });
-  }
 }
 

@@ -132,11 +132,11 @@ def send_services_to_backend(service, size, time, hostID):
         }
 
         data = {
-            "ssid":name_wifi,
+            "ssid": name_wifi,
             "hostId": hostID,
             "service": service,
             "category":categories.get(service, "unknown"),
-            "bytes":size,
+            "bytes": size,
             "windowSec":time 
         }
 

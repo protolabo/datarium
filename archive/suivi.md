@@ -2,11 +2,21 @@
 
 ## Semaine 1
 
+<<<<<<< HEAD
 ??? note "Faire l'introduction du projet"
     - [x] Faire la description du projet (par Reine)
         - [x] Écrire le contexte
         - [x] Écrire la problematique ou les motivations
         - [x] Écrire les propositions et objectifs
+=======
+??? note "Mettre en place l'environnement"
+
+??? note "Faire l'introduction du projet"
+    - [x] Faire la description du projet (par Reine)
+    - [x] Ecrire le contexte
+    - [x] Ecrire la problematique ou les motivations
+    - [x] Ecrire les propositions et objectifs
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
        
 
 !!! info "Notes"
@@ -66,8 +76,13 @@
      - [x] Pensez à répéter chaque test plusieurs fois pour obtenir une moyenne.
 
 ## Semaine 5
+<<<<<<< HEAD
     - [x] Faire la correction du prototype 2 sur Figma 
     - [x] Faire le modele C4 
+=======
+ - [x] Faire la correction du prototype 2 sur Figma 
+ - [x] Faire le modele C4 
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 
 ## Semaine 6
 - [x] Commencer le front end de l'application avec flutter
@@ -111,6 +126,17 @@
 
 ## Semaine 9
 
+<<<<<<< HEAD
+- [] Codage de l'application avec flutter
+- [] Revision de la structure du backend et base de donne
+- [] Test du sniffer
+## Semaine 10
+
+## Semaine 11
+
+## Semaine 12
+
+=======
 - [x] Codage de l'application avec flutter
 - [x] Revision de la structure du backend et base de donne
 - [x] Test du sniffer
@@ -144,4 +170,5 @@
 
 
 
+>>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
 ## Semaine 13

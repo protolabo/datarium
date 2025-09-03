@@ -1,138 +1,63 @@
-# Projet IFT3150: Datarium
+# Datarium: Sécurisation des données
 
-> **Thèmes**: Systemes embarqués, Génie logiciel, Application mobile  
+> **Thèmes**: Sécurité, Systemes embarqués, Génie logiciel, Application mobile  
 > **Superviseur**: Louis-Edouard Lafontant  
-<<<<<<< HEAD
-
-<!-- ## Informations importantes -->
-
-<!-- !!! info "Dates importantes"
-    - **Description du projet** : 23 mai 2025
-=======
-> **Collaborateurs:** Nom de(s) collaborateur(s) et partenaire(s)
-
-## Informations importantes
-
-<!-- !!! info "Dates importantes"
-    - **Description du projet** : 16 mai 2025
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
-    - **Foire 1: Prototypage** : 9-13 juin 2025
-    - **Foire 2: Version beta** : 14-18 juillet 2025
-    - **Présentation et rapport** : 11-15 août 2025 -->
 
 ## Équipe
 
-- Aïssatou Ndiaye: Responsable de...
-- Wendkuni Reine Rosine Guinguiere : Responsable de...
-- Papa Moussa Diabaté: Responsable de...
+- Shaina Labatte
 
 ## Description du projet
 
-<<<<<<< HEAD
 Datarium est un projet visant à concevoir un dispositif interactif de visualisation de l'empreinte numerique appelé thermometre de données. 
-=======
-&nbsp;&nbsp;&nbsp;&nbsp;Datarium est un projet visant à concevoir un dispositif interactif de visualisation de l'empreinte numerique appelé thermometre de données. 
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
-
-Ce dispositif reposera sur une carte Arduino zero , qui sera le coeur du systeme, permettant de collecter , traiter et afiicher les données en temps réel.
-
-Le Thermometre de données offrira une interface visuelle de l'empreinte numérique produite par l'utilisateur ou un système , que ce soit par des indicateurs graphiques (Écran, LED, Jauge) ou par des effets physiques (Mouvement, Lumiere, Son).
-Grâce à la polyvaleve de l'Arduino Zero, le dispositif pourr intégrer divers capteurs , modiles de communication et dispositifs de sortie pour fournir une visualisation  intercative.
-
-<<<<<<< HEAD
-L'objectif de Datarium est de: 
-
-1. Développer un dispositif interactif permettant la visualisation en temps réel de l’impact environnemental d’actions numériques.
-2. Traduire l’impact numérique en signaux visibles et compréhensibles, via un retour physique ou graphique (ex. : lumière, jauge, écran).
-3. Connecter ce dispositif à une application mobile, pour enrichir l’expérience utilisateur et le suivi de l’impact.
-4. Sensibiliser les utilisateurs à leur empreinte environnementale numérique de manière concrète et intuitive.
-5. Encourager des comportements numériques plus responsables, en rendant l’impact visible et immédiat.
-=======
-L'objectif de Datarium est de sensibiliser les utilisateurs sur leur consommation numérique et de promouvoir des comportements plus responsables face aux ressources informatiques. En rendant l'empreinte numérique visible de manière tangible, ce projet vise à renforcer le comprehention des utilisateurs quant à leur utilisation des ressources numériques et à les inciter à adopter des pratiques plus durables.
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
-   
 
 ### Contexte
 
-À l’ère du numérique, nos gestes quotidiens – envoyer un courriel, naviguer sur le web, regarder une vidéo en streaming, utiliser des services cloud ou encore interagir avec des intelligences artificielles – génèrent une empreinte numérique invisible, mais bien réelle. Cette activité numérique repose sur un vaste réseau d’équipements physiques qui consomment de l’énergie à chaque étape. Par exemple, lorsqu’un utilisateur regarde une vidéo sur YouTube ou envoie un message via un chatbot, cela mobilise des serveurs distants pour traiter la demande, des réseaux Wi-Fi ou mobiles pour transmettre les données, et des appareils personnels (téléphones, ordinateurs, routeurs) pour afficher le résultat.
-Même une action aussi simple que stocker un fichier dans un service en ligne comme Google Drive entraîne une série d’échanges invisibles entre plusieurs machines, consommant chacune de l’électricité. C’est l’ensemble de ce circuit, souvent ignoré par l’utilisateur, qui constitue l’empreinte numérique.
-
+À l’ère du numérique, chaque geste du quotidien – envoyer un courriel, naviguer sur le web, stocker 
+un fichier sur Google Drive, regarder une vidéo en streaming, utiliser un service cloud ou interagir 
+avec une intelligence artificielle – déclenche une série d’échanges invisibles entre serveurs, réseaux 
+et terminaux. Chacune de ces opérations consomme de l’électricité et contribue à une empreinte 
+environnementale bien réelle, mais largement méconnue. Cette empreinte, souvent qualifiée d’« 
+invisible », échappe à la perception de l’utilisateur, car elle ne laisse ni bruit, ni fumée, ni trace 
+tangible immédiate. 
 
 ### Problématique ou motivations
 
-Malgrés la croissance de l’activité numérique, la majorité des utilisateurs ne perçoivent pas son coût environnemental. L’empreinte numérique reste abstraite, car elle est difficile à visualiser, et ses effets sont différés, invisibles, et peu médiatisés.
-Il n’existe que très peu d’outils accessibles permettant de rendre compréhensible l’impact d’une action numérique simple, comme consulter une vidéo ou utiliser un service cloud.
-
-Ainsi dans un contexte où les enjeux environnementaux deviennent cruciaux, il est essentiel de développer des outils pédagogiques et accessibles pour faire comprendre l’impact des usages numériques. Ce projet se situe à la croisée de l’électronique, du mobile, et de la conscience écologique. Il propose une approche simple, intuitive et mesurable pour rendre visible l’invisible.
+Malgré la croissance de l’activité numérique, la majorité des utilisateurs ne perçoivent pas son coût 
+environnemental. Cette méconnaissance s’explique par le caractère abstrait de l’empreinte 
+numérique : ses effets sont différés, dispersés et rarement médiatisés. Peu d’outils accessibles 
+permettent aujourd’hui de visualiser concrètement l’impact d’une action numérique simple, comme 
+visionner une vidéo, envoyer un fichier ou utiliser un service de stockage en ligne. 
+En réponse à cela, nous proposons la création d’un outil intuitif et de métriques accessibles 
+permettant à tout utilisateur de suivre l’impact énergétique de son activité numérique. 
 
 ### Proposition et objectifs
 
-Le projet Datarium a pour ambition de concevoir un dispositif interactif de sensibilisation à l’impact environnemental du numérique. Il s’inscrit dans une volonté pédagogique de rendre visible, compréhensible et tangible une empreinte souvent invisible : celle de nos actions numériques quotidiennes. Le dispositif associe un retour physique ou graphique en temps réel (jauge lumineuse, affichage à l’écran, son, etc.) à une application mobile qui collecte, estime et restitue les données environnementales de chaque usage. Cette proposition repose sur plusieurs objectifs fondamentaux :
-
-#### Rendre visible et compréhensible l’empreinte réelle du numérique
- L’empreinte numérique est souvent différée, abstraite ou mal connue : émissions de CO₂, consommation électrique, utilisation des ressources minérales, etc. Datarium cherche à la matérialiser en temps réel, au moment même de l’usage (ex. : une LED qui change de couleur selon l’intensité de l’impact).
-
-En s’appuyant sur des données scientifiques solides (ACV, analyses d’émissions, études sur les usages), le dispositif agit aussi comme un outil de transparence citoyenne face à l’opacité des impacts numériques. Il permet ainsi de réconcilier l’expérience utilisateur avec les conséquences environnementales réelles de ses choix numériques.
-
-
-#### Encourager des usages numériques plus responsables
-  L’objectif est de favoriser des comportements de sobriété numérique volontaire, comme :
-
-    - préférer le Wi-Fi à la 5G (données mobiles)
-
-    - limiter la lecture de vidéos en haute résolution, ou l'utilisation de l'IA
-
-    - prolonger la durée de vie des équipements
-
-  En traduisant et rendant lisibles les impacts en unités tangibles, Datarium aide l’utilisateur à mieux ajuster ses pratiques sans contraintes techniques.
-
-#### Adapter l’affichage selon le type d’action et de connexion
-  Une requête d’IA, une vidéo en streaming, un e-mail ou une recherche web n’ont pas le même impact.
-
-  Le système est pensé pour analyser le type de service utilisé (via des protocoles ou des signatures réseau) et le mode de connexion (Wi-Fi, 4G, 5G) afin d’ajuster dynamiquement l’indicateur.
-
-#### Donner à l’utilisateur le pouvoir d’explorer ses usages
- L’application mobile permettra à chaque utilisateur de :
-
- Choisir une catégorie de services à suivre (streaming, réseaux sociaux, requêtes IA, etc.)
-
-Identifier quels services consomment le plus en énergie, données ou CO₂
-
-Comparer différentes pratiques numériques et visualiser leur empreinte respective
-
-Cette approche favorise l’appropriation individuelle des enjeux de durabilité numérique, et crée un espace interactif d’exploration et d’apprentissage personnalisé.
-
-
-#### Sensibiliser sans culpabiliser
-   Le projet ne cherche pas à pointer du doigt les utilisateurs, mais à donner des repères concrets pour mieux comprendre et arbitrer ses choix numériques.
-
-   En proposant peut-etre des comparaisons simples (ex. : "cette vidéo HD = 200g CO₂ = 2 km en voiture"), l’interface favorise une prise de conscience accessible.   
+Notre projet vise à développer un outil intuitif et interactif permettant de mesurer et de visualiser l’impact énergétique des usages numériques. Plus précisément, il poursuit les objectifs suivants: 
+1. Rendre visible et compréhensible l’empreinte réelle du numérique grâce à une interface virtuelle et physique claire et accessible 
+2. Encourager des usages plus responsables en mettant à disposition des indicateurs concrets, actionnables et facile à comprendre 
+3. Adapter l’affichage aux contextes d’utilisation : le système analyse le type de service ou de connexion pour ajuster dynamiquement les données présentées. 
+4. Donner à l’utilisateur le pouvoir d’explorer ses usages : cette approche favorise l’appropriation individuelle des enjeux de durabilité numérique, et crée un espace interactif d’exploration et d’apprentissage personnalisé 
+5. Sensibiliser sans culpabiliser : l’objectif n’est pas de pointer du doigt, mais de fournir des repères fiables pour permettre des choix plus éclairés. 
+En réunissant données chiffrées, visualisations pédagogiques et interactions personnalisées, ce projet ambitionne de transformer l’empreinte numérique – aujourd’hui abstraite – en une information concrète, utile et engageante pour l’utilisateur.
 
 ## Échéancier
 
 !!! info
     Le suivi complet est disponible dans la page [Suivi de projet](suivi.md).
 
-| Jalon (*Milestone*)            | Date prévue   | Livrable                            | Statut      |
-|--------------------------------|---------------|-------------------------------------|-------------|
-| Ouverture de projet            | 1 mai         | Proposition de projet               | ✅ Terminé  |
-| Analyse des exigences          | 16 mai        | Document d'analyse                  | ✅ Terminé |
-| Prototype 1                    | 23 mai        | Maquette + Flux d'activités         | ✅ Terminé  |
-| Prototype 2                    | 30 mai        | Prototype finale + Flux             | ✅ Terminé    |
-| Architecture                   | 30 mai        | Diagramme UML ou modèle C4          | ✅ Terminé   |
-| Modèle de donneés              | 6 juin        | Diagramme UML ou entité-association | ✅ Terminé   |
-<<<<<<< HEAD
-| Revue de conception            | 6 juin        | Feedback encadrant + ajustements    | 🔄 En cours  |
-| Implémentation v1              | 20 juin       | Application v1                      | ⏳ À venir  |
-| Implémentation v2 + tests      | 11 juillet    | Application v2 + Tests              | ⏳ À venir  |
-| Implémentation v3              | 1er août      | Version finale                      | ⏳ À venir  |
-| Tests                          | 11-31 juillet | Plan + Résultats intermédiaires     | ⏳ À venir  |
-=======
-| Revue de conception            | 6 juin        | Feedback encadrant + ajustements    | ✅ Terminé |
-| Implémentation v1              | 20 juin       | Application v1                      | ✅ Terminé  |
-| Implémentation v2 + tests      | 11 juillet    | Application v2 + Tests              | 🔄 En cours  |
-| Implémentation v3              | 1er août      | Version finale                      | 🔄 En cours|
-| Tests                          | 11-31 juillet | Plan + Résultats intermédiaires     | 🔄 En cours  |
->>>>>>> 4e2b3bd227bd40134ada8dc0ef766d52f84050d0
-| Évaluation finale              | 8 août        | Analyse des résultats + Discussion  | ⏳ À venir  |
-| Présentation + Rapport         | 15 août       | Présentation + Rapport              | ⏳ À venir  |
+| Jalon (*Milestone*)            | Date prévue    | Livrable                            | Statut      |
+|--------------------------------|----------------|-------------------------------------|-------------|
+| Ouverture de projet            | 2 septembre    | Proposition de projet               | ✅ Terminé  |
+| Analyse des exigences          | 16 septembre   | Document d'analyse                  | 🔄 En cours |
+| Prototype 1                    | 23 septembre   | Maquette + Flux d'activités         | ⏳ À venir  |
+| Prototype 2                    | 30 septembre   | Prototype finale + Flux             | ⏳ À venir  |
+| Architecture                   | 30 septembre   | Diagramme UML ou modèle C4          | ⏳ À venir  |
+| Modèle de donneés              | 6 octobre      | Diagramme UML ou entité-association | ⏳ À venir  |
+| Revue de conception            | 6 octobre      | Feedback encadrant + ajustements    | ⏳ À venir  |
+| Implémentation v1              | 20 octobre     | Application v1                      | ⏳ À venir  |
+| Implémentation v2 + tests      | 11 novembre    | Application v2 + Tests              | ⏳ À venir  |
+| Implémentation v3              | 1er décembre   | Version finale                      | ⏳ À venir  |
+| Tests                          | 11-31 novembre | Plan + Résultats intermédiaires     | ⏳ À venir  |
+| Évaluation finale              | 8 décembre     | Analyse des résultats + Discussion  | ⏳ À venir  |
+| Présentation + Rapport         | 12 décembre    | Présentation + Rapport              | ⏳ À venir  |

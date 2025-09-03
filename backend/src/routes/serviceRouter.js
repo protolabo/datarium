@@ -1,4 +1,3 @@
-// src/routes/serviceRouter.js
 import { Router }         from 'express';
 import * as svcCtrl       from '../controllers/serviceController.js';
 

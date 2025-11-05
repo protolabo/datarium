@@ -1,39 +1,64 @@
-import { db } from '../config/firebase.js';
+import { supabase } from '../config/supabase.js';
 
 export class ServiceRepo {
     static async create({ id, name, category, description }) {
-        await db.doc(`services/${id}`).set({ name, category, description });
-        return { id, name, category, description };
+        const { data, error } = await supabase
+            .from('services')
+            .insert({ id, name, category, description })
+            .select();
+        if (error) throw error;
+        return data[0];
     }
 
     static async listAll() {
-        const snap = await db.collection('services').get();
-        return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const { data, error } = await supabase
+            .from('services')
+            .select('*');
+        if (error) throw error;
+        return data || [];
     }
 
     static async getById(id) {
-        const snap = await db.doc(`services/${id}`).get();
-        return snap.exists ? { id: snap.id, ...snap.data() } : null;
+        const { data, error } = await supabase
+            .from('services')
+            .select('*')
+            .eq('id', id)
+            .single();
+        if (error && error.code !== 'PGRST116') throw error;
+        return data;
     }
 
-    static async update(id, data) {
-        await db.doc(`services/${id}`).update(data);
+    static async update(id, updateData) {
+        const { data, error } = await supabase
+            .from('services')
+            .update(updateData)
+            .eq('id', id)
+            .select();
+        if (error) throw error;
+        return data[0];
     }
 
     static async remove(id) {
-        await db.doc(`services/${id}`).delete();
+        const { error } = await supabase
+            .from('services')
+            .delete()
+            .eq('id', id);
+        if (error) throw error;
+        return { success: true };
     }
 
     static async ajoutService({ id, name, category, description = '' }) {
-        const ref = db.doc(`services/${id}`);
-        await db.runTransaction(async t => {
-            const snap = await t.get(ref);
-            if (!snap.exists) {
-                t.set(ref, { name, category, description, firstSeen: Date.now() });
-            } else if (category && !snap.data().category) {
-                // on complète la catégorie si elle manquait
-                t.update(ref, { category });
-            }
-        });
+        
+        const existingService = await this.getById(id);
+
+        if (!existingService) {
+            return this.create({ id, name, category, description });
+        }
+        // si le service existe déjà, on met à jour la catégorie si elle est fournie et absente
+        else if (category && !existingService.category) {
+            return this.update(id, { category });
+        }
+        // Sinon, ne rien faire
+        return existingService;
     }
 }

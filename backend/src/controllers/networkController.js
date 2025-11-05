@@ -2,18 +2,21 @@
 
 import { NetworkRepo } from '../models/networksRepo.js';
 
-const repo = new NetworkRepo();
+// on appelle directement les méthodes dans notre classe
+// const repo = new NetworkRepo();
 
 /* GET /networks */
 export async function list(req, res, next) {
-    try { res.json(await repo.listAll()); }
+    try { 
+        res.json(await NetworkRepo.listAll()); 
+    }
     catch (e) { next(e); }
 }
 
 /* GET /networks/:id */
 export async function get(req, res, next) {
     try {
-        const net = await repo.getById(req.params.id);
+        const net = await NetworkRepo.getById(req.params.id);
         if (!net) return res.status(404).json({ error: 'Network not found' });
         res.json(net);
     } catch (e) { next(e); }
@@ -22,7 +25,7 @@ export async function get(req, res, next) {
 /* GET /networkStatsEsp32 */
 export async function getEsp32Stats(req, res, next) {
     try {
-        const stat_General = await repo.listAll();
+        const stat_General = await NetworkRepo.listAll();
 
         let NetworkOfUser;
 
@@ -46,4 +49,3 @@ export async function getEsp32Stats(req, res, next) {
         res.status(500).json({ error: "Server error", details: e.message });
     }
 }
-

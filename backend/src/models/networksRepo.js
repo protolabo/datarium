@@ -35,7 +35,7 @@ export class NetworkRepo {
         const { data, error } = await supabase
             .from('network')
             .select('*')
-            .order('lastBatchReceived', { ascending: false }); 
+            .order('last_batch_received', { ascending: false }); 
             // ascendint: false = du + récent au + ancien
 
         if (error) {

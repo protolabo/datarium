@@ -1,49 +1,75 @@
 import { NetworkLogRepo } from '../models/networkLog.js';
 
-
 // Analyses de recommandations intelligentes 
 
-async function analyzeHighConsumptionService(networkId, logs) {
-  if (logs.length === 0) return null;
+// This function now returns an array of recommendations for all high-consumption services
+async function analyzeHighConsumptionServices(networkId, logs) {
+  if (logs.length === 0) return []; // Return an empty array if no logs
+
+  const recommendations = [];
+  const HIGH_CONSUMPTION_THRESHOLD = 1.5; // Set a threshold (e.g., 1.5 kWh)
 
   const consumptionByService = logs.reduce((acc, log) => {
-    if (!acc[log.serviceName]) {
-      acc[log.serviceName] = 0;
+    const serviceName = log.service?.name;
+    if (!serviceName || !log.kwh) return acc;
+
+    if (!acc[serviceName]) {
+      acc[serviceName] = { kwh: 0, category: log.service.category || 'Inconnu' };
     }
-    acc[log.serviceName] += log.kwh;
+    acc[serviceName].kwh += log.kwh;
     return acc;
   }, {});
 
-  // sort(a,b) si résultat > 0, b avant a; si < 0 a avant b
-  const [topService, topConsumption] = Object.entries(consumptionByService).sort((a, b) => b[1] - a[1])[0];
+  // --- DEBUG LOGGING ---
+  console.log("--- Recommendation Analysis ---");
+  console.log("Aggregated consumption by service:", consumptionByService);
+  console.log(`High consumption threshold is: ${HIGH_CONSUMPTION_THRESHOLD}`);
+  // --- END DEBUG LOGGING ---
 
-  if (topConsumption > 0.1) {
-    return {
-      id: 'rec-high-consumption',
-      icon: 'chart',
-      title: `Réduisez l'utilisation de ${topService}`,
-      category: logs.find(log => log.serviceName === topService)?.category || 'Unkmown',
-      description: `${topService} est votre service le plus énergivore. Envisagez de réduire son utilisation ou sa qualité.`,
-      savings: `Jusqu'à 10% de réduction`
-    };
+  const serviceEntries = Object.entries(consumptionByService);
+  if (serviceEntries.length === 0) return [];
+
+  // Iterate over all services and generate a recommendation for each one that exceeds the threshold
+  for (const [serviceName, serviceData] of serviceEntries) {
+    const isHighConsumption = serviceData.kwh > HIGH_CONSUMPTION_THRESHOLD;
+    
+    // --- DEBUG LOGGING ---
+    console.log(`Checking service: ${serviceName}, kWh: ${serviceData.kwh}, Is High? -> ${isHighConsumption}`);
+    // --- END DEBUG LOGGING ---
+
+    if (isHighConsumption) {
+      recommendations.push({
+        id: `rec-high-${serviceName.toLowerCase().replace(/\s/g, '-')}`,
+        icon: 'chart', // Ou mapper une icône spécifique basée sur la catégorie
+        title: `Réduisez l'utilisation de ${serviceName}`,
+        category: serviceData.category,
+        description: `${serviceName} est un de vos services les plus énergivores. Envisagez de réduire son utilisation.`,
+        savings: `Jusqu'à 10% de réduction`
+      });
+    }
   }
+  console.log("---------------------------\n");
 
-  return null;
+  return recommendations;
 }
 
-async function analyzeNightUsage(networkId, logs) {
+async function analyzeNightUsage(networkId, logs, startHour, endHour) {
   const nightLogs = logs.filter(log => {
-    const hour = new Date(log.timestamp).getHours();
-    return hour >= 0 && hour < 6; // 00:00 - 05:59
+    const hour = new Date(log.ts).getHours(); 
+    if(startHour < endHour) {
+      return hour >= startHour && hour < endHour;
+    } else {
+      return hour >= startHour || hour < endHour;
+    }
   });
 
-  const totalNightKwh = nightLogs.reduce((sum, log) => sum + log.kwh, 0);
+  const totalNightKwh = nightLogs.reduce((sum, log) => sum + (log.kwh || 0), 0);
 
   if (totalNightKwh > 0.2) {
     return {
       id: 'rec-night-usage',
       icon: 'power',
-      title: "Réduire l'utilisation nocturne'",
+      title: "Réduire l'utilisation nocturne", 
       category: 'Général',
       description: "Une consommation d'énergie élevée a été détectée pendant la nuit. Assurez-vous que les appareils inutilisés sont éteints.",
       savings: "Économisez ~0.1 kWh par jour"
@@ -61,20 +87,25 @@ async function analyzeNightUsage(networkId, logs) {
  */
 export async function getRecommendations(req, res, next) {
   try {
-    const { networkId } = req.query;
+    const { networkId, nightStartHour = 0, nightEndHour = 6 } = req.query;
     if (!networkId) {
-      return res.status(400).json({ error: 'networkId is required' });
+      return res.status(400).json({ error: 'networkId est requis' });
     }
 
-    const logs = await NetworkLogRepo.search({ networkId, limit: 1000 });
+    const logs = await NetworkLogRepo.search({ network_id: networkId, limit: 1000 });
 
     const smartRecommendations = [];
 
-    const highConsumptionRec = await analyzeHighConsumptionService(networkId, logs);
-    if (highConsumptionRec) smartRecommendations.push(highConsumptionRec);
+    // Obtenir toutes les recommandations de forte consommation (c'est maintenant un tableau)
+    const highConsumptionRecs = await analyzeHighConsumptionServices(networkId, logs);
+    if (highConsumptionRecs.length > 0) {
+      smartRecommendations.push(...highConsumptionRecs); // Utiliser l'opérateur spread pour ajouter tous les éléments
+    }
 
-    const nightUsageRec = await analyzeNightUsage(networkId, logs);
-    if (nightUsageRec) smartRecommendations.push(nightUsageRec);
+    const nightUsageRec = await analyzeNightUsage(networkId, logs, parseInt(nightStartHour), parseInt(nightEndHour));
+    if (nightUsageRec) {
+      smartRecommendations.push(nightUsageRec);
+    }
 
     const quickTips = [
       { id: 'tip1', text: "Fermez les onglets de navigateur inutilisés pour réduire le traitement en arrière-plan." },

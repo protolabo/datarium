@@ -1,10 +1,10 @@
-
 import { validateBatch } from '../validators/recordsValidator.js';
 import { ImpactService } from '../services/impactService.js';
 import { NetworkRepo } from '../models/networksRepo.js';
 import { NetworkLogRepo } from '../models/networkLog.js';
 import { ServiceRepo } from '../models/serviceRepo.js';
 import { API_KEY_SNIFFER } from '../config/env.js';
+import { pushThermo } from '../utils/socket.js';
 
 const impactSvc = new ImpactService();
 
@@ -23,7 +23,7 @@ export async function recordUsageBatch(req, res, next) {
                 windowSec, category } = lot;
 
             /* assure la présence du service */
-            await ServiceRepo.ajoutService({
+            const serviceData = await ServiceRepo.ajoutService({
                 id: service,
                 name: service,
                 category: category ?? null
@@ -31,18 +31,31 @@ export async function recordUsageBatch(req, res, next) {
 
             const { kwh, co2 } = impactSvc.bytesToImpact(bytes);
 
+            // Diffuser le nouveau point de données via WebSocket
+            pushThermo({
+                kwh,
+                co2,
+                bytes,
+                duration: windowSec,
+                category: serviceData.category,
+                serviceName: service,
+                networkId: networkId
+            });
+
             await NetworkRepo.incrementAggregate({
                 networkId, bytes, kwh, co2,
                 listenSec: windowSec, hostId
             });
 
             await NetworkLogRepo.insertLot({
-                networkId,
-                serviceName: service,
-                hostId,
+                network_id: networkId,
+                service_id: serviceData.id,
+                host_id: hostId,
                 bytes, kwh, co2,
-                listenSec: windowSec,
-                category
+                window_sec: windowSec,
+                protocol: lot.protocol ?? 'TCP',
+                meta: lot.meta ?? {},
+                requests: lot.requests ?? 1,
             });
         }
         res.sendStatus(204);
@@ -76,7 +89,18 @@ export async function getLastLog(req, res, next) {
 export async function getRecentLogs(req, res, next) {
     try {
         const limit = +req.query.limit || 10;
-        const logs = await NetworkLogRepo.fetchLatest(limit);
+        const { networkId } = req.query;
+
+        if (!networkId) {
+            return res.status(400).json({ error: 'networkId is required' });
+        }
+
+        // Use the search method to correctly filter by networkId
+        const logs = await NetworkLogRepo.search({
+            network_id: networkId, 
+            limit: limit
+        });
+        
         res.json(logs);
     } catch (e) { next(e); }
 }

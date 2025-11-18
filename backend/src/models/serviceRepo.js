@@ -3,7 +3,7 @@ import { supabase } from '../config/supabase.js';
 export class ServiceRepo {
     static async create({ id, name, category, description }) {
         const { data, error } = await supabase
-            .from('services')
+            .from('service')
             .insert({ id, name, category, description })
             .select();
         if (error) throw error;
@@ -12,7 +12,7 @@ export class ServiceRepo {
 
     static async listAll() {
         const { data, error } = await supabase
-            .from('services')
+            .from('service')
             .select('*');
         if (error) throw error;
         return data || [];
@@ -20,7 +20,7 @@ export class ServiceRepo {
 
     static async getById(id) {
         const { data, error } = await supabase
-            .from('services')
+            .from('service')
             .select('*')
             .eq('id', id)
             .single();
@@ -30,7 +30,7 @@ export class ServiceRepo {
 
     static async update(id, updateData) {
         const { data, error } = await supabase
-            .from('services')
+            .from('service')
             .update(updateData)
             .eq('id', id)
             .select();
@@ -40,7 +40,7 @@ export class ServiceRepo {
 
     static async remove(id) {
         const { error } = await supabase
-            .from('services')
+            .from('service')
             .delete()
             .eq('id', id);
         if (error) throw error;
